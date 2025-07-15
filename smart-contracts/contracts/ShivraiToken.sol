@@ -8,8 +8,9 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 // import "hardhat/console.sol";
 
 contract ShivraiToken is ERC20, Ownable {
-    uint public maxAmount = 50000 * 10 ** 18;
-    uint public coolDown = 24 hours;
+    uint public constant TOTAL_SUPPLY_CAP = 2_000_000 * 10 ** 18;
+    uint public COOLDOWN = 24 hours;
+    uint public MAX_AMOUNT_PER_USER = 20000 * 10 ** 18;
     struct User {
         uint amount;
         uint lastMintTime;
@@ -19,15 +20,22 @@ contract ShivraiToken is ERC20, Ownable {
         // no pre-supply minting
     }
     function faucetMint(address userAddress, uint amount) external {
-        User storage user = userMapping[userAddress];
         require(
-            block.timestamp > user.lastMintTime + coolDown,
+            totalSupply() + amount <= TOTAL_SUPPLY_CAP,
+            "Over the Limit of total supply cap"
+        );
+
+        User storage user = userMapping[userAddress];
+
+        require(
+            block.timestamp > user.lastMintTime + COOLDOWN,
             "You can't mine any tokens for now"
         );
         require(
-            user.amount < maxAmount,
+            user.amount + amount <= MAX_AMOUNT_PER_USER,
             "user has exceeded the Limit for the maximum amount"
         );
+
         _mint(userAddress, amount * 10 ** decimals());
         user.amount += amount;
         user.lastMintTime = block.timestamp;
