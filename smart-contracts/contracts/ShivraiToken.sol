@@ -19,7 +19,7 @@ contract ShivraiToken is ERC20, Ownable {
         // no pre-supply minting
     }
     function faucetMint(address userAddress, uint amount) external {
-        User memory user = userMapping[userAddress];
+        User storage user = userMapping[userAddress];
         require(
             block.timestamp > user.lastMintTime + coolDown,
             "You can't mine any tokens for now"
