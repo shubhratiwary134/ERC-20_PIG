@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract ShivraiToken is ERC20, Ownable {
     uint public maxAmount = 50000 * 10 ** 18;
-    uint public coolDown = 1 hours;
+    uint public coolDown = 24 hours;
     struct User {
         uint amount;
         uint lastMintTime;
@@ -21,9 +21,15 @@ contract ShivraiToken is ERC20, Ownable {
     function faucetMint(address userAddress, uint amount) external {
         User memory user = userMapping[userAddress];
         require(
+            block.timestamp > user.lastMintTime + coolDown,
+            "You can't mine any tokens for now"
+        );
+        require(
             user.amount < maxAmount,
             "user has exceeded the Limit for the maximum amount"
         );
         _mint(userAddress, amount * 10 ** decimals());
+        user.amount += amount;
+        user.lastMintTime = block.timestamp;
     }
 }
