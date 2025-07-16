@@ -28,14 +28,9 @@ contract ShivraiToken is ERC20, Ownable {
             totalSupply() + (amount * 10 ** decimals()) <= TOTAL_SUPPLY_CAP,
             "Over the Limit of total supply cap"
         );
-
         require(
             block.timestamp > user.lastMintTime + COOLDOWN,
             "You can't mine any tokens for now"
-        );
-        require(
-            user.amount + (amount * 10 ** decimals()) <= MAX_AMOUNT_PER_USER,
-            "user has exceeded the Limit for the maximum amount"
         );
 
         _mint(userAddress, amount * 10 ** decimals());
