@@ -75,7 +75,6 @@ contract ShivraiToken is ERC20, Ownable {
         );
         _mint(userAddress, reward);
         user.amount += reward;
-        user.lastMintTime = block.timestamp;
         user.lastRaceTime = block.timestamp;
         user.lastRoundPosition = _position;
     }
