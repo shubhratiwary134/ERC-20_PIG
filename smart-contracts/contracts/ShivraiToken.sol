@@ -11,6 +11,13 @@ contract ShivraiToken is ERC20, Ownable {
     uint256 public COOLDOWN = 24 hours;
     uint256 public RACE_COOLDOWN = 2 hours;
     uint256 public MAX_AMOUNT_PER_USER = 20000 * 10 ** decimals();
+    bool public faucetPaused = false;
+
+    event Mint(address indexed sender, uint amount, uint timeStamp);
+    event RaceRewardMint(address indexed sender, uint amount, uint timeStamp);
+    event FaucetStatusChange(bool faucetPaused);
+    event TokenBurned(address indexed sender, uint amount, uint timeStamp);
+
     struct User {
         uint amount;
         uint lastMintTime;
@@ -27,7 +34,9 @@ contract ShivraiToken is ERC20, Ownable {
         // no pre-supply minting
         TOTAL_SUPPLY_CAP = 2_000_000 * 10 ** decimals();
     }
+
     function faucetMint() external {
+        require(!faucetPaused, "The faucet is currently paused.");
         User storage user = userMapping[msg.sender];
         uint256 amount = MAX_AMOUNT_PER_USER - user.amount > 10
             ? 10
@@ -49,6 +58,7 @@ contract ShivraiToken is ERC20, Ownable {
         _mint(msg.sender, tokenAmount);
         user.amount += tokenAmount;
         user.lastMintTime = block.timestamp;
+        emit Mint(msg.sender, tokenAmount, block.timestamp);
     }
     function raceReward(RacePosition _position) external {
         uint256 amount;
@@ -77,6 +87,7 @@ contract ShivraiToken is ERC20, Ownable {
         user.amount += reward;
         user.lastRaceTime = block.timestamp;
         user.lastRoundPosition = _position;
+        emit RaceRewardMint(msg.sender, reward, block.timestamp);
     }
     function burnToken(uint256 amount) external {
         User storage user = userMapping[msg.sender];
@@ -84,5 +95,29 @@ contract ShivraiToken is ERC20, Ownable {
         require(user.amount >= amountToBeBurned, "Not enough tokens to burn");
         _burn(msg.sender, amountToBeBurned);
         user.amount -= amountToBeBurned;
+        emit TokenBurned(msg.sender, amountToBeBurned, block.timestamp);
+    }
+
+    // Admin Only features.
+    function setMaxAmountPerUser(uint256 amount) external onlyOwner {
+        require(
+            amount < TOTAL_SUPPLY_CAP,
+            "one person MAX can't be more than the total supply capital"
+        );
+        MAX_AMOUNT_PER_USER = amount;
+    }
+    function setCooldown(uint256 cooldown) external onlyOwner {
+        COOLDOWN = cooldown;
+    }
+    function setRaceCooldown(uint256 raceCooldown) external onlyOwner {
+        RACE_COOLDOWN = raceCooldown;
+    }
+    function pauseFaucet() external onlyOwner {
+        faucetPaused = true;
+        emit FaucetStatusChange(faucetPaused);
+    }
+    function unPauseFaucet() external onlyOwner {
+        faucetPaused = false;
+        emit FaucetStatusChange(faucetPaused);
     }
 }
