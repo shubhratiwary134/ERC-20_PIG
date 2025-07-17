@@ -122,20 +122,7 @@ contract ShivraiToken is ERC20, Ownable {
     }
 
     // Read Only functions
-    function getLastClaimedAt() external view returns (uint256) {
-        User memory user = userMapping[msg.sender];
-        return user.lastMintTime;
-    }
-    function getLastRaceTime() external view returns (uint256) {
-        User memory user = userMapping[msg.sender];
-        return user.lastRaceTime;
-    }
-    function getUserAmount() external view returns (uint256) {
-        User memory user = userMapping[msg.sender];
-        return user.amount;
-    }
-    function getLastRacePosition() external view returns (RacePosition) {
-        User memory user = userMapping[msg.sender];
-        return user.lastRoundPosition;
+    function getUserInfo() external view returns (User memory) {
+        return userMapping[msg.sender];
     }
 }
