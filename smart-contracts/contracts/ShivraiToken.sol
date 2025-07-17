@@ -27,8 +27,8 @@ contract ShivraiToken is ERC20, Ownable {
         // no pre-supply minting
         TOTAL_SUPPLY_CAP = 2_000_000 * 10 ** decimals();
     }
-    function faucetMint(address userAddress) external {
-        User storage user = userMapping[userAddress];
+    function faucetMint() external {
+        User storage user = userMapping[msg.sender];
         uint256 amount = MAX_AMOUNT_PER_USER - user.amount > 10
             ? 10
             : MAX_AMOUNT_PER_USER - user.amount;
@@ -46,13 +46,13 @@ contract ShivraiToken is ERC20, Ownable {
             "You can't mine any tokens for now"
         );
 
-        _mint(userAddress, tokenAmount);
+        _mint(msg.sender, tokenAmount);
         user.amount += tokenAmount;
         user.lastMintTime = block.timestamp;
     }
-    function raceReward(address userAddress, RacePosition _position) external {
+    function raceReward(RacePosition _position) external {
         uint256 amount;
-        User storage user = userMapping[userAddress];
+        User storage user = userMapping[msg.sender];
         if (_position == RacePosition.first) {
             amount = 20;
         } else if (_position == RacePosition.second) {
@@ -73,9 +73,16 @@ contract ShivraiToken is ERC20, Ownable {
             totalSupply() + reward <= TOTAL_SUPPLY_CAP,
             "Over the Limit of total supply cap"
         );
-        _mint(userAddress, reward);
+        _mint(msg.sender, reward);
         user.amount += reward;
         user.lastRaceTime = block.timestamp;
         user.lastRoundPosition = _position;
+    }
+    function burnToken(uint256 amount) external {
+        User storage user = userMapping[msg.sender];
+        uint256 amountToBeBurned = amount * 10 ** decimals();
+        require(user.amount >= amountToBeBurned, "Not enough tokens to burn");
+        _burn(msg.sender, amountToBeBurned);
+        user.amount -= amountToBeBurned;
     }
 }
