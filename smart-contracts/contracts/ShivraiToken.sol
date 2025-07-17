@@ -4,9 +4,11 @@ pragma solidity ^0.8.28;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
+
 // Uncomment this line to use console.log
 // import "hardhat/console.sol";
-contract ShivraiToken is ERC20, Ownable {
+contract ShivraiToken is ERC20, Ownable, ERC20Permit {
     uint256 public immutable TOTAL_SUPPLY_CAP;
     uint256 public COOLDOWN = 24 hours;
     uint256 public RACE_COOLDOWN = 2 hours;
@@ -30,7 +32,11 @@ contract ShivraiToken is ERC20, Ownable {
         third
     }
     mapping(address => User) public userMapping;
-    constructor() ERC20("ShivraiToken", "MRAJ") Ownable(msg.sender) {
+    constructor()
+        ERC20("Shivrai", "MRAJ")
+        Ownable(msg.sender)
+        ERC20Permit("Shivrai")
+    {
         // no pre-supply minting
         TOTAL_SUPPLY_CAP = 2_000_000 * 10 ** decimals();
     }
@@ -61,6 +67,7 @@ contract ShivraiToken is ERC20, Ownable {
         emit Mint(msg.sender, tokenAmount, block.timestamp);
     }
     function raceReward(RacePosition _position) external {
+        require(!faucetPaused, "The faucet is currently paused.");
         uint256 amount;
         User storage user = userMapping[msg.sender];
         if (_position == RacePosition.first) {
