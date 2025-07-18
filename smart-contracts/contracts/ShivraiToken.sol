@@ -19,7 +19,6 @@ contract ShivraiToken is ERC20, Ownable, ERC20Permit {
     event RaceRewardMint(address indexed sender, uint amount, uint timeStamp);
     event FaucetStatusChange(bool faucetPaused);
     event TokenBurned(address indexed sender, uint amount, uint timeStamp);
-
     struct User {
         uint amount;
         uint lastMintTime;
@@ -40,7 +39,6 @@ contract ShivraiToken is ERC20, Ownable, ERC20Permit {
         // no pre-supply minting
         TOTAL_SUPPLY_CAP = 2_000_000 * 10 ** decimals();
     }
-
     function faucetMint() external {
         require(!faucetPaused, "The faucet is currently paused.");
         User storage user = userMapping[msg.sender];
