@@ -77,17 +77,18 @@ contract ShivraiToken is ERC20, Ownable, ERC20Permit {
         }
         uint256 reward = amount * 10 ** decimals();
         require(
-            block.timestamp > user.lastRaceTime + RACE_COOLDOWN,
-            "You can't mine any tokens for now"
+            totalSupply() + reward <= TOTAL_SUPPLY_CAP,
+            "Over the Limit of total supply cap"
         );
         require(
             user.amount + reward <= MAX_AMOUNT_PER_USER,
             "Limit for the user max amount exceeded"
         );
         require(
-            totalSupply() + reward <= TOTAL_SUPPLY_CAP,
-            "Over the Limit of total supply cap"
+            block.timestamp > user.lastRaceTime + RACE_COOLDOWN,
+            "You can't mine any tokens for now"
         );
+
         _mint(msg.sender, reward);
         user.amount += reward;
         user.lastRaceTime = block.timestamp;

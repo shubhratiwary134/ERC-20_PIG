@@ -75,8 +75,8 @@ describe("Faucet Contract", () => {
     });
   });
   describe("raceReward", () => {
+    const RacePosition = { first: 0, second: 1, third: 2 };
     it("should reward the user accordingly", async () => {
-      const RacePosition = { first: 0, second: 1, third: 2 };
       await network.provider.send("evm_increaseTime", [7200 + 1]);
       await network.provider.send("evm_mine");
       const tx = await faucet.connect(user).raceReward(RacePosition.third);
@@ -98,6 +98,41 @@ describe("Faucet Contract", () => {
       expect(userStruct.amount).to.equal(expectedAmount);
       expect(userStruct.lastRaceTime).to.equal(timeStamp);
       expect(userStruct.lastRoundPosition).to.equal(RacePosition.third);
+    });
+    it("should revert if the faucet is paused", async () => {
+      await faucet.connect(owner).pauseFaucet();
+
+      await expect(
+        faucet.connect(user).raceReward(RacePosition.third)
+      ).to.be.revertedWith("The faucet is currently paused.");
+    });
+    it("should revert if the amount exceeds TOTAL_SUPPLY_CAP", async () => {
+      const totalSupplyCap = await faucet.TOTAL_SUPPLY_CAP();
+      const decimals = await faucet.decimals();
+      const mintAmount = 5n * 10n ** BigInt(decimals);
+
+      await faucet.__test_mint(user.address, totalSupplyCap - mintAmount);
+
+      await expect(
+        faucet.connect(user).raceReward(RacePosition.third)
+      ).to.be.revertedWith("Over the Limit of total supply cap");
+    });
+    it("should revert if the amount cap of user has exceeded", async () => {
+      const maxAmountPerUser = await faucet.MAX_AMOUNT_PER_USER();
+      await faucet
+        .connect(owner)
+        .__test_setUserAmount(user.address, maxAmountPerUser);
+
+      await expect(
+        faucet.connect(user).raceReward(RacePosition.third)
+      ).to.be.revertedWith("Limit for the user max amount exceeded");
+    });
+    it("should revert if the cooldown is not completed", async () => {
+      await faucet.connect(user).raceReward(2);
+
+      await expect(
+        faucet.connect(user).raceReward(RacePosition.third)
+      ).to.be.revertedWith("You can't mine any tokens for now");
     });
   });
 });
