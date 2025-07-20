@@ -157,4 +157,102 @@ describe("Faucet Contract", () => {
       );
     });
   });
+
+  // owner only functions
+  describe("setMaxAmountPerUser", () => {
+    it("owner could set the amount of UserMax", async () => {
+      const decimals = await faucet.decimals();
+      const amount = 5000n * 10n ** BigInt(decimals);
+      await faucet.connect(owner).setMaxAmountPerUser(amount);
+
+      await expect(faucet.MAX_AMOUNT_PER_USER()).to.equal(amount);
+    });
+    it("should revert if amount is greater than or equal to TOTAL_SUPPLY_CAP", async () => {
+      const totalSupplyCap = await faucet.TOTAL_SUPPLY_CAP();
+      const amount = totalSupplyCap + 1n;
+
+      await expect(
+        faucet.connect(owner).setMaxAmountPerUser(amount)
+      ).to.be.revertedWith(
+        "one person MAX can't be more than the total supply capital"
+      );
+    });
+    it("should revert if non-owner tries to set the MAX amount", async () => {
+      await expect(
+        faucet.connect(user).setMaxAmountPerUser(9000)
+      ).to.be.revertedWith("Ownable: caller is not the owner");
+    });
+  });
+  describe("setCooldown", () => {
+    it("should set the cooldown for faucet minting", async () => {
+      const cooldown = 8400;
+      await faucet.connect(owner).setCooldown(cooldown);
+      await expect(faucet.COOLDOWN()).to.equal(cooldown);
+    });
+    it("should revert if non-owner tries to set the cooldown", async () => {
+      await expect(faucet.connect(user).setCooldown(9000)).to.be.revertedWith(
+        "Ownable: caller is not the owner"
+      );
+    });
+  });
+  describe("setRaceCooldown", () => {
+    it("should set the race cooldown", async () => {
+      const cooldown = 6500;
+      await faucet.connect(owner).setRaceCooldown(cooldown);
+
+      await expect(faucet.RACE_COOLDOWN()).to.be.equal(cooldown);
+    });
+    it("should revert if non-owner tries to set the cooldown", async () => {
+      await expect(
+        faucet.connect(user).setRaceCooldown(9000)
+      ).to.be.revertedWith("Ownable: caller is not the owner");
+    });
+  });
+  describe("pause/unpause faucet", () => {
+    it("should allow the owner to pause the faucet", async () => {
+      const tx = await faucet.connect(owner).pauseFaucet();
+      await expect(tx).to.emit(faucet, "FaucetStatusChange").withArgs(true);
+
+      const paused = await faucet.faucetPaused();
+      expect(paused).to.be.true;
+    });
+
+    it("should allow the owner to unpause the faucet", async () => {
+      await faucet.connect(owner).pauseFaucet();
+
+      const tx = await faucet.connect(owner).unPauseFaucet();
+      await expect(tx).to.emit(faucet, "FaucetStatusChange").withArgs(false);
+
+      const paused = await faucet.faucetPaused();
+      expect(paused).to.be.false;
+    });
+
+    it("should revert if non-owner tries to pause the faucet", async () => {
+      await expect(faucet.connect(user).pauseFaucet()).to.be.revertedWith(
+        "Ownable: caller is not the owner"
+      );
+    });
+
+    it("should revert if non-owner tries to unpause the faucet", async () => {
+      await faucet.connect(owner).pauseFaucet();
+
+      await expect(faucet.connect(user).unPauseFaucet()).to.be.revertedWith(
+        "Ownable: caller is not the owner"
+      );
+    });
+  });
+
+  //read only function
+  describe("getUserInfo", () => {
+    it("should get the user Info", async () => {
+      await faucet.connect(user).faucetMint();
+      const decimals = await faucet.decimals();
+      const expectedAmount = 10n * 10n ** BigInt(decimals);
+
+      const userStruct = await faucet.connect(user).getUserInfo();
+
+      expect(userStruct.amount).to.equal(expectedAmount);
+      expect(userStruct.lastMintTime).to.gt(0);
+    });
+  });
 });
