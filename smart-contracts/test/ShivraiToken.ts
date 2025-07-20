@@ -135,4 +135,26 @@ describe("Faucet Contract", () => {
       ).to.be.revertedWith("You can't mine any tokens for now");
     });
   });
+  describe("burnToken", () => {
+    it("should burn token as much user wants", async () => {
+      await faucet.connect(user).faucetMint();
+      const decimals = await faucet.decimals();
+      const amount = 5n * 10n ** BigInt(decimals);
+
+      await faucet.connect(user).burnToken(amount);
+
+      const userStruct = await faucet.userMapping(user.address);
+
+      const expectedAmount = 10n * 10n ** BigInt(decimals) - amount;
+      expect(userStruct.amount).to.equal(expectedAmount);
+    });
+    it("should revert if the amount of token sent to burn is more than the tokens user currently has", async () => {
+      const decimals = await faucet.decimals();
+      const amount = 10n * 10n ** BigInt(decimals);
+
+      await expect(faucet.connect(user).burnToken(amount)).to.be.revertedWith(
+        "Not enough tokens to burn"
+      );
+    });
+  });
 });
