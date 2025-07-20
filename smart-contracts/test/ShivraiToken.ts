@@ -234,8 +234,6 @@ describe("Faucet Contract", () => {
     });
 
     it("should revert if non-owner tries to unpause the faucet", async () => {
-      await faucet.connect(owner).pauseFaucet();
-
       await expect(faucet.connect(user).unPauseFaucet()).to.be.revertedWith(
         "Ownable: caller is not the owner"
       );
