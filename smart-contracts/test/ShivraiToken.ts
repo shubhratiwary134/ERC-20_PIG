@@ -1,5 +1,5 @@
 import { ethers, network } from "hardhat";
-import { expect, use } from "chai";
+import { expect } from "chai";
 import { ShivraiToken, ShivraiToken__factory } from "../typechain-types";
 import { SignerWithAddress } from "@nomicfoundation/hardhat-ethers/signers";
 
@@ -46,13 +46,30 @@ describe("Faucet Contract", () => {
         .connect(owner)
         .__test_setUserAmount(user.address, maxAmountPerUser);
 
-      const cooldown = await faucet.COOLDOWN();
-      await network.provider.send("evm_increaseTime", [Number(cooldown) + 1]);
-      await network.provider.send("evm_mine");
-
       await expect(faucet.connect(user).faucetMint()).to.be.revertedWith(
         "invalid condition can't mint 0 tokens, No tokens left"
       );
     });
+    it("should revert if the amount exceeds TOTAL_SUPPLY_CAP", async () => {
+      const totalSupplyCap = await faucet.TOTAL_SUPPLY_CAP();
+      const decimals = await faucet.decimals();
+      const mintAmount = 10n * 10n ** BigInt(decimals);
+
+      await faucet.__test_mint(user.address, totalSupplyCap - mintAmount);
+
+      await expect(faucet.connect(user).faucetMint()).to.be.revertedWith(
+        "Over the Limit of total supply cap"
+      );
+    });
+    it("should revert if the cooldown is not completed", async () => {
+      await faucet.connect(user).faucetMint();
+
+      await expect(faucet.connect(user).faucetMint()).to.be.revertedWith(
+        "You can't mine any tokens for now"
+      );
+    });
+  });
+  describe("raceReward", () => {
+    it("should reward the user accordingly", () => {});
   });
 });

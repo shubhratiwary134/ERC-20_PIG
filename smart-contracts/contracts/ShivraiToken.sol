@@ -133,11 +133,15 @@ contract ShivraiToken is ERC20, Ownable, ERC20Permit {
 
     //function for testing
     function __test_setUserAmount(
-        address userAddr,
+        address userAddress,
         uint256 amount
     ) external onlyOwner {
         require(block.chainid == 31337, "Test-only function");
-        userMapping[userAddr].amount = amount;
-        userMapping[userAddr].lastMintTime = block.timestamp - COOLDOWN - 1;
+        userMapping[userAddress].amount = amount;
+        userMapping[userAddress].lastMintTime = block.timestamp - COOLDOWN - 1;
+    }
+    function __test_mint(address to, uint256 amount) external {
+        require(block.chainid == 31337, "Test-only function");
+        _mint(to, amount);
     }
 }
