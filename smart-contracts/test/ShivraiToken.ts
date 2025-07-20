@@ -1,11 +1,12 @@
-import { ethers } from "hardhat";
-import { expect } from "chai";
+import { ethers, network } from "hardhat";
+import { expect, use } from "chai";
 import { ShivraiToken, ShivraiToken__factory } from "../typechain-types";
+import { SignerWithAddress } from "@nomicfoundation/hardhat-ethers/signers";
 
 describe("Faucet Contract", () => {
   let faucet: ShivraiToken;
-  let owner: any;
-  let user: any;
+  let owner: SignerWithAddress;
+  let user: SignerWithAddress;
   beforeEach(async function () {
     [owner, user] = await ethers.getSigners();
     const FaucetFactory = (await ethers.getContractFactory(
@@ -32,6 +33,26 @@ describe("Faucet Contract", () => {
       expect(userStruct.lastMintTime).to.equal(expectedTimestamp);
     });
 
-    it("should revert if the faucet is paused", () => {});
+    it("should revert if the faucet is paused", async () => {
+      await faucet.connect(owner).pauseFaucet();
+
+      await expect(faucet.connect(user).faucetMint()).to.be.revertedWith(
+        "The faucet is currently paused."
+      );
+    });
+    it("should revert if the amount is less than or equal to zero", async () => {
+      const maxAmountPerUser = await faucet.MAX_AMOUNT_PER_USER();
+      await faucet
+        .connect(owner)
+        .__test_setUserAmount(user.address, maxAmountPerUser);
+
+      const cooldown = await faucet.COOLDOWN();
+      await network.provider.send("evm_increaseTime", [Number(cooldown) + 1]);
+      await network.provider.send("evm_mine");
+
+      await expect(faucet.connect(user).faucetMint()).to.be.revertedWith(
+        "invalid condition can't mint 0 tokens, No tokens left"
+      );
+    });
   });
 });

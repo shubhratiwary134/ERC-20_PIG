@@ -130,4 +130,14 @@ contract ShivraiToken is ERC20, Ownable, ERC20Permit {
     function getUserInfo() external view returns (User memory) {
         return userMapping[msg.sender];
     }
+
+    //function for testing
+    function __test_setUserAmount(
+        address userAddr,
+        uint256 amount
+    ) external onlyOwner {
+        require(block.chainid == 31337, "Test-only function");
+        userMapping[userAddr].amount = amount;
+        userMapping[userAddr].lastMintTime = block.timestamp - COOLDOWN - 1;
+    }
 }
