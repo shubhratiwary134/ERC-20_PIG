@@ -16,6 +16,8 @@ describe("Faucet Contract", () => {
   });
   describe("faucetMint", () => {
     it("should mint tokens", async () => {
+      await network.provider.send("evm_increaseTime", [86400 + 1]);
+      await network.provider.send("evm_mine");
       const tx = await faucet.connect(user).faucetMint();
       const receipt = await tx.wait();
       if (!receipt) {
@@ -29,7 +31,10 @@ describe("Faucet Contract", () => {
 
       const userStruct = await faucet.userMapping(user.address);
 
-      expect(userStruct.amount).to.equal(10);
+      const decimals = await faucet.decimals();
+      const expectedAmount = 10n * 10n ** BigInt(decimals);
+
+      expect(userStruct.amount).to.equal(expectedAmount);
       expect(userStruct.lastMintTime).to.equal(expectedTimestamp);
     });
 
@@ -70,6 +75,29 @@ describe("Faucet Contract", () => {
     });
   });
   describe("raceReward", () => {
-    it("should reward the user accordingly", () => {});
+    it("should reward the user accordingly", async () => {
+      const RacePosition = { first: 0, second: 1, third: 2 };
+      await network.provider.send("evm_increaseTime", [7200 + 1]);
+      await network.provider.send("evm_mine");
+      const tx = await faucet.connect(user).raceReward(RacePosition.third);
+      const receipt = await tx.wait();
+      if (!receipt) {
+        throw new Error("Transaction receipt is null");
+      }
+      const block = await ethers.provider.getBlock(receipt.blockNumber);
+      if (!block) {
+        throw new Error("Block not found");
+      }
+      const timeStamp = block.timestamp;
+
+      const userStruct = await faucet.userMapping(user.address);
+
+      const decimals = await faucet.decimals();
+      const expectedAmount = 5n * 10n ** BigInt(decimals);
+
+      expect(userStruct.amount).to.equal(expectedAmount);
+      expect(userStruct.lastRaceTime).to.equal(timeStamp);
+      expect(userStruct.lastRoundPosition).to.equal(RacePosition.third);
+    });
   });
 });
