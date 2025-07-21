@@ -1,4 +1,3 @@
-body {
-background: radial-gradient(circle at center, #0f0f0f, #000000);
-color: white;
+body{
+    background: radial-gradient(circle at top left, #10151f, #0a0c12 60%, #050509);
 }
