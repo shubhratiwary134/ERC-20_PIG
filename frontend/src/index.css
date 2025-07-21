@@ -1,3 +1,9 @@
-body{
+
+html, body{
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    scrollbar-width: none;
     background: radial-gradient(circle at top left, #10151f, #0a0c12 60%, #050509);
+    height: 100%;
 }
