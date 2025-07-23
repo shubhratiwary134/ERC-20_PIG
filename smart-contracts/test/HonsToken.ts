@@ -10,7 +10,7 @@ describe("Faucet Contract", () => {
   beforeEach(async function () {
     [owner, user] = await ethers.getSigners();
     const FaucetFactory = (await ethers.getContractFactory(
-      "HonsToken"
+      "Hons"
     )) as Hons__factory;
     faucet = await FaucetFactory.deploy();
   });
@@ -60,7 +60,10 @@ describe("Faucet Contract", () => {
       const decimals = await faucet.decimals();
       const mintAmount = 10n * 10n ** BigInt(decimals);
 
-      await faucet.__test_mint(user.address, totalSupplyCap - mintAmount);
+      await faucet.__test_mint(
+        user.address,
+        totalSupplyCap - mintAmount + BigInt(1)
+      );
 
       await expect(faucet.connect(user).faucetMint()).to.be.revertedWith(
         "Over the Limit of total supply cap"
@@ -111,7 +114,10 @@ describe("Faucet Contract", () => {
       const decimals = await faucet.decimals();
       const mintAmount = 5n * 10n ** BigInt(decimals);
 
-      await faucet.__test_mint(user.address, totalSupplyCap - mintAmount);
+      await faucet.__test_mint(
+        user.address,
+        totalSupplyCap - mintAmount + BigInt(1)
+      );
 
       await expect(
         faucet.connect(user).raceReward(RacePosition.third)
@@ -145,7 +151,8 @@ describe("Faucet Contract", () => {
 
       const userStruct = await faucet.userMapping(user.address);
 
-      const expectedAmount = 10n * 10n ** BigInt(decimals) - amount;
+      const standardAmount = 10n * 10n ** BigInt(decimals);
+      const expectedAmount = standardAmount - amount;
       expect(userStruct.amount).to.equal(expectedAmount);
     });
     it("should revert if the amount of token sent to burn is more than the tokens user currently has", async () => {
@@ -163,9 +170,11 @@ describe("Faucet Contract", () => {
     it("owner could set the amount of UserMax", async () => {
       const decimals = await faucet.decimals();
       const amount = 5000n * 10n ** BigInt(decimals);
-      await faucet.connect(owner).setMaxAmountPerUser(amount);
 
-      await expect(faucet.MAX_AMOUNT_PER_USER()).to.equal(amount);
+      await faucet.connect(owner).setMaxAmountPerUser(amount);
+      const stored = await faucet.MAX_AMOUNT_PER_USER();
+
+      await expect(stored).to.equal(amount);
     });
     it("should revert if amount is greater than or equal to TOTAL_SUPPLY_CAP", async () => {
       const totalSupplyCap = await faucet.TOTAL_SUPPLY_CAP();
@@ -180,19 +189,20 @@ describe("Faucet Contract", () => {
     it("should revert if non-owner tries to set the MAX amount", async () => {
       await expect(
         faucet.connect(user).setMaxAmountPerUser(9000)
-      ).to.be.revertedWith("Ownable: caller is not the owner");
+      ).to.be.revertedWithCustomError(faucet, "OwnableUnauthorizedAccount");
     });
   });
   describe("setCooldown", () => {
     it("should set the cooldown for faucet minting", async () => {
       const cooldown = 8400;
       await faucet.connect(owner).setCooldown(cooldown);
-      await expect(faucet.COOLDOWN()).to.equal(cooldown);
+      const storedCooldown = await faucet.COOLDOWN();
+      await expect(storedCooldown).to.equal(cooldown);
     });
     it("should revert if non-owner tries to set the cooldown", async () => {
-      await expect(faucet.connect(user).setCooldown(9000)).to.be.revertedWith(
-        "Ownable: caller is not the owner"
-      );
+      await expect(
+        faucet.connect(user).setCooldown(9000)
+      ).to.be.revertedWithCustomError(faucet, "OwnableUnauthorizedAccount");
     });
   });
   describe("setRaceCooldown", () => {
@@ -200,12 +210,12 @@ describe("Faucet Contract", () => {
       const cooldown = 6500;
       await faucet.connect(owner).setRaceCooldown(cooldown);
 
-      await expect(faucet.RACE_COOLDOWN()).to.be.equal(cooldown);
+      await expect(await faucet.RACE_COOLDOWN()).to.be.equal(cooldown);
     });
     it("should revert if non-owner tries to set the cooldown", async () => {
       await expect(
         faucet.connect(user).setRaceCooldown(9000)
-      ).to.be.revertedWith("Ownable: caller is not the owner");
+      ).to.be.revertedWithCustomError(faucet, "OwnableUnauthorizedAccount");
     });
   });
   describe("pause/unpause faucet", () => {
@@ -228,15 +238,15 @@ describe("Faucet Contract", () => {
     });
 
     it("should revert if non-owner tries to pause the faucet", async () => {
-      await expect(faucet.connect(user).pauseFaucet()).to.be.revertedWith(
-        "Ownable: caller is not the owner"
-      );
+      await expect(
+        faucet.connect(user).pauseFaucet()
+      ).to.be.revertedWithCustomError(faucet, "OwnableUnauthorizedAccount");
     });
 
     it("should revert if non-owner tries to unpause the faucet", async () => {
-      await expect(faucet.connect(user).unPauseFaucet()).to.be.revertedWith(
-        "Ownable: caller is not the owner"
-      );
+      await expect(
+        faucet.connect(user).unPauseFaucet()
+      ).to.be.revertedWithCustomError(faucet, "OwnableUnauthorizedAccount");
     });
   });
 

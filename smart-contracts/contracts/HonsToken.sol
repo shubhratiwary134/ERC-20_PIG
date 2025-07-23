@@ -97,7 +97,7 @@ contract Hons is ERC20, Ownable, ERC20Permit {
     }
     function burnToken(uint256 amount) external {
         User storage user = userMapping[msg.sender];
-        uint256 amountToBeBurned = amount * 10 ** decimals();
+        uint256 amountToBeBurned = amount;
         require(user.amount >= amountToBeBurned, "Not enough tokens to burn");
         _burn(msg.sender, amountToBeBurned);
         user.amount -= amountToBeBurned;
