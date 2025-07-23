@@ -7,6 +7,7 @@ interface WalletState {
   provider: ethers.BrowserProvider | null;
   signer: ethers.Signer | null;
   chainId: number | null;
+  connected: boolean;
 }
 
 const initialState: WalletState = {
@@ -14,6 +15,7 @@ const initialState: WalletState = {
   provider: null,
   signer: null,
   chainId: null,
+  connected: false,
 };
 
 const walletSlice = createSlice({
@@ -26,12 +28,14 @@ const walletSlice = createSlice({
       state.provider = provider;
       state.signer = signer;
       state.chainId = chainId;
+      state.connected = true;
     },
     disconnectWallet(state) {
       state.account = null;
       state.provider = null;
       state.signer = null;
       state.chainId = null;
+      state.connected = false;
     },
   },
 });

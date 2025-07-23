@@ -1,17 +1,17 @@
 import { ethers, network } from "hardhat";
 import { expect } from "chai";
-import { ShivraiToken, ShivraiToken__factory } from "../typechain-types";
+import { Hons, Hons__factory } from "../typechain-types";
 import { SignerWithAddress } from "@nomicfoundation/hardhat-ethers/signers";
 
 describe("Faucet Contract", () => {
-  let faucet: ShivraiToken;
+  let faucet: Hons;
   let owner: SignerWithAddress;
   let user: SignerWithAddress;
   beforeEach(async function () {
     [owner, user] = await ethers.getSigners();
     const FaucetFactory = (await ethers.getContractFactory(
-      "ShivraiToken"
-    )) as ShivraiToken__factory;
+      "HonsToken"
+    )) as Hons__factory;
     faucet = await FaucetFactory.deploy();
   });
   describe("faucetMint", () => {

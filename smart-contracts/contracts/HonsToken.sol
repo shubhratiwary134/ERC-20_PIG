@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 
 // Uncomment this line to use console.log
 // import "hardhat/console.sol";
-contract ShivraiToken is ERC20, Ownable, ERC20Permit {
+contract Hons is ERC20, Ownable, ERC20Permit {
     uint256 public immutable TOTAL_SUPPLY_CAP;
     uint256 public COOLDOWN = 24 hours;
     uint256 public RACE_COOLDOWN = 2 hours;
@@ -32,9 +32,9 @@ contract ShivraiToken is ERC20, Ownable, ERC20Permit {
     }
     mapping(address => User) public userMapping;
     constructor()
-        ERC20("Shivrai", "MRAJ")
+        ERC20("Hons", "MRAJ")
         Ownable(msg.sender)
-        ERC20Permit("Shivrai")
+        ERC20Permit("Hons")
     {
         // no pre-supply minting
         TOTAL_SUPPLY_CAP = 2_000_000 * 10 ** decimals();
