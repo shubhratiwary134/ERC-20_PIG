@@ -1,4 +1,5 @@
 import "./App.css";
+import WalletButton from "./components/WalletButton";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <div className="buttons">
           <button className="btn primary">Start Minting</button>
           <button className="btn secondary">Learn More</button>
+          <WalletButton />
         </div>
       </div>
     </div>
