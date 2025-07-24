@@ -2,7 +2,7 @@ import WalletButton from "./WalletButton";
 
 const Navbar = () => {
   return (
-    <div>
+    <div className="flex border-white border-2">
       <WalletButton />
     </div>
   );
