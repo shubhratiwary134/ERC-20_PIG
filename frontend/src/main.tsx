@@ -6,16 +6,19 @@ import { Provider } from "react-redux";
 import store from "./store/store.ts";
 import { BrowserRouter, Route, Routes } from "react-router";
 import PigRace from "./pages/PigRace.tsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-      <Provider store={store}>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/pigRace" element={<PigRace />}></Route>
-        </Routes>
-      </Provider>
+      <QueryClientProvider client={new QueryClient()}>
+        <Provider store={store}>
+          <Routes>
+            <Route path="/" element={<App />} />
+            <Route path="/pigRace" element={<PigRace />}></Route>
+          </Routes>
+        </Provider>
+      </QueryClientProvider>
     </BrowserRouter>
   </StrictMode>
 );
