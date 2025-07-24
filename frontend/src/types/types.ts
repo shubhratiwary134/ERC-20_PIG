@@ -1,4 +1,3 @@
-// types.ts
 export type RacePosition = "first" | "second" | "third" | "none";
 
 export const enumMap: Record<number, RacePosition> = {

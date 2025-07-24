@@ -26,6 +26,12 @@ const userSlice = createSlice({
       state.lastRacePosition = lastRacePosition;
       state.lastRaceTimeStamp = lastRaceTimeStamp;
     },
+    resetUser: (state) => {
+      state.amount = 0;
+      state.lastMintTimeStamp = null;
+      state.lastRacePosition = "none";
+      state.lastRaceTimeStamp = null;
+    },
   },
 });
 
