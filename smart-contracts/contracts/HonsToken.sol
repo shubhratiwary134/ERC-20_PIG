@@ -141,7 +141,7 @@ contract Hons is ERC20, Ownable, ERC20Permit {
         userMapping[userAddress].amount = amount;
         userMapping[userAddress].lastMintTime = block.timestamp - COOLDOWN - 1;
     }
-    function __test_mint(address to, uint256 amount) external {
+    function __test_mint(address to, uint256 amount) external onlyOwner {
         require(block.chainid == 31337, "Test-only function");
         _mint(to, amount);
     }
