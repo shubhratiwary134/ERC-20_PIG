@@ -4,6 +4,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useFaucetMintMutate } from "./customHooks/useFaucetMintMutate";
 import { useAppSelector } from "./store/hook";
+import { FaRocket, FaTicketAlt } from "react-icons/fa";
 
 function App() {
   const { connected } = useAppSelector((state) => state.wallet);
@@ -28,29 +29,57 @@ function App() {
       <Navbar />
       <div className="relative flex w-full h-screen overflow-hidden ">
         <div className="relative z-20 flex text-wrap flex-col justify-center mb-10 w-1/2 px-16 text-white">
-          <h1 className="text-8xl font-bold">
+          <h1 className="text-8xl font-bold font-inter ">
             Mint Your <br />
             <span className="text-blue-300">Digital Assets</span>
           </h1>
-          <p className="mt-6 text-lg">
+          <p className="mt-6 text-lg font-sans">
             Create, deploy, and manage your own cryptocurrency tokens on the
             blockchain. Join the future of decentralized finance with our
             cutting-edge minting platform.
           </p>
-          <div className="mt-10 flex space-x-6">
+          <div className="mt-10 flex flex-col sm:flex-row items-center  gap-10">
             <button
-              className="btn primary border-2 p-2"
+              className="flex flex-col items-center justify-center gap-4
+      w-52 h-40
+      bg-white/10
+      backdrop-blur-lg
+      border border-white/20
+      rounded-2xl
+      shadow-lg
+      text-white font-semibold
+      transition-all duration-300 hover:scale-110
+      hover:bg-white/20 hover:border-white/40
+      focus:outline-none focus:ring-2 focus:ring-white/50
+      disabled:opacity-50 disabled:cursor-not-allowed
+    "
               disabled={!connected}
               onClick={handleMint}
             >
-              Claim Token
+              <FaTicketAlt size={40} />
+              <span>Claim Token</span>
             </button>
+
             <button
-              className="btn secondary border-2 p-2"
+              className="
+      flex flex-col items-center justify-center gap-4
+      w-52 h-40
+      bg-white/10
+      backdrop-blur-lg
+      border border-white/20
+      rounded-2xl
+      shadow-lg
+      text-white font-semibold
+      transition-all duration-300  hover:scale-110
+      hover:bg-white/20 hover:border-white/40
+      focus:outline-none focus:ring-2 focus:ring-white/50
+      disabled:opacity-50 disabled:cursor-not-allowed
+    "
               disabled={!connected}
               onClick={() => (window.location.href = "/pigRace")}
             >
-              Start Racing
+              <FaRocket size={40} />
+              <span>Start Racing</span>
             </button>
           </div>
         </div>

@@ -1,5 +1,7 @@
+import { IoPersonSharp } from "react-icons/io5";
 import { useWallet } from "../customHooks/useWallet";
 import { useAppSelector } from "../store/hook";
+import { MdOutlineAccountBalanceWallet } from "react-icons/md";
 
 const WalletButton = () => {
   const { connectWallet, removeWallet } = useWallet();
@@ -7,9 +9,13 @@ const WalletButton = () => {
   return (
     <div className="text-white">
       {connected ? (
-        <button onClick={removeWallet}>Disconnect Wallet</button>
+        <button onClick={removeWallet}>
+          <IoPersonSharp size={32} />
+        </button>
       ) : (
-        <button onClick={connectWallet}>Connect Wallet</button>
+        <button onClick={connectWallet}>
+          <MdOutlineAccountBalanceWallet size={32} />
+        </button>
       )}
     </div>
   );
