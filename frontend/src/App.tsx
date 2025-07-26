@@ -1,6 +1,7 @@
-import { toast, ToastContainer } from "react-toastify";
-import "./App.css";
 import Navbar from "./components/Navbar";
+import SplineElement from "./components/SplineElement";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useFaucetMintMutate } from "./customHooks/useFaucetMintMutate";
 import { useAppSelector } from "./store/hook";
 
@@ -22,22 +23,21 @@ function App() {
       }
     }
   };
-
   return (
     <>
       <Navbar />
-      <div className="banner flex justify-between items-center ">
-        <div className="content flex flex-col gap-20">
-          <h1 className="text-6xl font-bold">
+      <div className="relative flex w-full h-screen overflow-hidden ">
+        <div className="relative z-20 flex text-wrap flex-col justify-center mb-10 w-1/2 px-16 text-white">
+          <h1 className="text-8xl font-bold">
             Mint Your <br />
-            <span className="text-amber-300">Digital Assets</span>
+            <span className="text-blue-300">Digital Assets</span>
           </h1>
-          <p className="text-lg">
+          <p className="mt-6 text-lg">
             Create, deploy, and manage your own cryptocurrency tokens on the
             blockchain. Join the future of decentralized finance with our
             cutting-edge minting platform.
           </p>
-          <div className="buttons flex justify-around">
+          <div className="mt-10 flex space-x-6">
             <button
               className="btn primary border-2 p-2"
               disabled={!connected}
@@ -54,7 +54,10 @@ function App() {
             </button>
           </div>
         </div>
-        <div className="w-1/2">{/* Container for the 3d blob with coin */}</div>
+
+        <div className="absolute inset-y-0 right-0 w-1/2 z-10">
+          <SplineElement />
+        </div>
       </div>
       <ToastContainer position="top-right" />
     </>

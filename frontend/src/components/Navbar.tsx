@@ -19,7 +19,7 @@ const Navbar = () => {
     enabled: Boolean(account && provider),
   });
   return (
-    <div className="flex border-amber-300 text-white border-b-2 justify-between p-5 mx-10">
+    <div className="flex border-blue-300 text-white border-b-2 justify-between p-5 mx-10">
       <div className="flex gap-20">
         {isLoading ? (
           <p>Fetching for you</p>
