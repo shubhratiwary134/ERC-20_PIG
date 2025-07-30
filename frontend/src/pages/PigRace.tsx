@@ -1,5 +1,13 @@
+import Navbar from "../components/Navbar";
+import RaceCard from "../components/RaceCard";
+
 const PigRace = () => {
-  return <div>PigRace</div>;
+  return (
+    <div>
+      <Navbar />
+      <RaceCard />
+    </div>
+  );
 };
 
 export default PigRace;

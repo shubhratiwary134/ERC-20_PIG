@@ -2,8 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import WalletButton from "./WalletButton";
 import { getContract } from "../utils/getContract";
 import { useAppSelector } from "../store/hook";
-import { CiDollar } from "react-icons/ci";
 import { IoTimeOutline } from "react-icons/io5";
+import { FaDollarSign } from "react-icons/fa";
 
 const Navbar = () => {
   const { account, provider } = useAppSelector((state) => state.wallet);
@@ -27,7 +27,7 @@ const Navbar = () => {
           <p>Fetching for you</p>
         ) : (
           <p className="flex items-center gap-2">
-            <CiDollar size={32} />:{" "}
+            <FaDollarSign size={24} />:{" "}
             {isError ? " Error Fetching Info" : data?.amount}
           </p>
         )}
