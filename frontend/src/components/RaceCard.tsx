@@ -27,7 +27,7 @@ const RaceCard = ({
               selectedIndex == index ? "bg-white/20 scale-110" : "bg-white/10"
             }  flex-col gap-5 items-center w-64 h-80 
             backdrop-blur-lg border border-white/20 rounded-2xl shadow-lg text-white transition-all
-            duration-300  hover:scale-110 hover:bg-white/20 hover:border-white/40`}
+            duration-300 hover:cursor-pointer hover:scale-110 hover:bg-white/20 hover:border-white/40`}
           >
             <img src={pig.imageUrl} className="h-1/2" />
 

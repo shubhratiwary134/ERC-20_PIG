@@ -1,6 +1,9 @@
 import type { Pig } from "../types/types";
 
 const RaceStartButton = ({ selectedPig }: { selectedPig: Pig | null }) => {
+  const handleRaceStart = () => {
+    console.log("race started with pig");
+  };
   return (
     <button
       className="
@@ -18,8 +21,11 @@ const RaceStartButton = ({ selectedPig }: { selectedPig: Pig | null }) => {
          disabled:opacity-50 disabled:cursor-not-allowed
        "
       disabled={!selectedPig}
+      onClick={handleRaceStart}
     >
-      {selectedPig && <img src={selectedPig?.imageUrl} className="h-1/2" />}
+      {selectedPig && (
+        <img src={selectedPig?.imageUrl} className="h-1/2 rounded-3xl" />
+      )}
       <span>Start Racing</span>
     </button>
   );
