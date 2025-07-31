@@ -1,9 +1,46 @@
-import type { Pig } from "../types/types";
+import { toast } from "react-toastify";
+import { useRaceRewardMintMutate } from "../customHooks/useRaceRewardMintMutate";
+import type { Pig, RacePosition } from "../types/types";
+import {
+  assignRacePositions,
+  type PigResult,
+} from "../utils/assignRacePositions";
+import { Pigs } from "../data/pigData";
 
-const RaceStartButton = ({ selectedPig }: { selectedPig: Pig | null }) => {
-  const handleRaceStart = () => {
-    console.log("race started with pig");
+interface RaceStartButtonProps {
+  selectedPig: Pig | null;
+  setResults: (pigs: PigResult[]) => void;
+}
+
+const RaceStartButton = ({ selectedPig, setResults }: RaceStartButtonProps) => {
+  const { mutateAsync } = useRaceRewardMintMutate();
+  const handleRaceReward = async (position: RacePosition) => {
+    if (!selectedPig) return;
+    try {
+      const receipt = await mutateAsync(position);
+      toast.success(
+        `Mint successful! Transaction Hash: ${receipt.transactionHash}`
+      );
+    } catch (error: any) {
+      if (error.code === 4001 || error.code === "ACTION_REJECTED") {
+        toast.warning("Transaction cancelled by user.");
+      } else {
+        toast.error(`Race start failed: ${error.message}`);
+      }
+    }
   };
+  const startRace = () => {
+    const results = assignRacePositions(Pigs);
+    setResults(results);
+
+    const userPigResult = results.find((r) => r.pig.name === selectedPig?.name);
+    if (!userPigResult) return;
+
+    if (userPigResult.racePosition !== "none") {
+      handleRaceReward(userPigResult.racePosition);
+    }
+  };
+
   return (
     <button
       className="
@@ -21,7 +58,7 @@ const RaceStartButton = ({ selectedPig }: { selectedPig: Pig | null }) => {
          disabled:opacity-50 disabled:cursor-not-allowed
        "
       disabled={!selectedPig}
-      onClick={handleRaceStart}
+      onClick={startRace}
     >
       {selectedPig && (
         <img src={selectedPig?.imageUrl} className="h-1/2 rounded-3xl" />

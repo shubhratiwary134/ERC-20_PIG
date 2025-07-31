@@ -1,15 +1,19 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAppSelector } from "../store/hook";
-import { faucetMint } from "../utils/faucetMint";
+import { getContract } from "../utils/getContract";
+import type { RacePosition } from "../types/types";
 
-export const useFaucetMintMutate = () => {
-  const { signer, account } = useAppSelector((state) => state.wallet);
+export const useRaceRewardMintMutate = () => {
+  const { account, signer } = useAppSelector((state) => state.wallet);
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async () => {
+    mutationFn: async (position: RacePosition) => {
       if (!signer) throw new Error("Signer not available");
-      return await faucetMint(signer);
+      const contract = getContract(signer);
+      const tx = await contract.raceReward(position);
+      const receipt = await tx.wait();
+      return receipt;
     },
     onSuccess: () => {
       return queryClient.invalidateQueries({
