@@ -19,7 +19,7 @@ const RaceStartButton = ({ selectedPig }: { selectedPig: Pig | null }) => {
        "
       disabled={!selectedPig}
     >
-      <img src={selectedPig?.imageUrl} className="h-1/2"></img>
+      {selectedPig && <img src={selectedPig?.imageUrl} className="h-1/2" />}
       <span>Start Racing</span>
     </button>
   );
