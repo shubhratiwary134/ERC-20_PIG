@@ -5,3 +5,13 @@ export const enumMap: Record<number, RacePosition> = {
   1: "second",
   2: "third",
 };
+
+export interface Pig {
+  name: string;
+  imageUrl: string;
+  description: string;
+  height: string;
+  weight: string;
+  Agility: number;
+  longestJump: string;
+}
