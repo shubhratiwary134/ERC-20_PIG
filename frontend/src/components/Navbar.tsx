@@ -7,7 +7,7 @@ import { FaDollarSign } from "react-icons/fa";
 
 const Navbar = () => {
   const { account, provider } = useAppSelector((state) => state.wallet);
-  const { data, isLoading, isError } = useQuery({
+  const { data } = useQuery({
     queryKey: ["userInfo", account],
     queryFn: async () => {
       if (!provider) throw new Error("provide not available");
@@ -23,22 +23,13 @@ const Navbar = () => {
   return (
     <div className="flex border-blue-300 text-white border-b-2 justify-between p-5 mx-10">
       <div className="flex gap-20">
-        {isLoading ? (
-          <p>Fetching for you</p>
-        ) : (
-          <p className="flex items-center gap-2">
-            <FaDollarSign size={24} />:{" "}
-            {isError ? " Error Fetching Info" : data?.amount}
-          </p>
-        )}
-        {isLoading ? (
-          <p>Fetching for you</p>
-        ) : (
-          <p className="flex items-center gap-2">
-            <IoTimeOutline size={32} />:{" "}
-            {isError ? " Error Fetching Info" : data?.lastMintTime}
-          </p>
-        )}
+        <p className="flex items-center gap-2 ">
+          <FaDollarSign size={24} />: {data?.amount ?? "---"}
+        </p>
+
+        <p className="flex items-center gap-2">
+          <IoTimeOutline size={32} />: {data?.lastMintTime ?? "---"}
+        </p>
       </div>
       <WalletButton />
     </div>
