@@ -7,7 +7,7 @@ const WalletButton = () => {
   const { connectWallet, removeWallet } = useWallet();
   const { connected } = useAppSelector((state) => state.wallet);
   return (
-    <div className="text-white">
+    <div className="text-white cursor-pointer">
       {connected ? (
         <button onClick={removeWallet}>
           <IoPersonSharp size={32} />

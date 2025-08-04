@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { useRaceRewardMintMutate } from "../customHooks/useRaceRewardMintMutate";
+
 import type { Pig, RacePosition } from "../types/types";
 import {
   assignRacePositions,
@@ -10,10 +10,14 @@ import { Pigs } from "../data/pigData";
 interface RaceStartButtonProps {
   selectedPig: Pig | null;
   setResults: (pigs: PigResult[]) => void;
+  mutateAsync: (position: RacePosition) => Promise<any>;
 }
 
-const RaceStartButton = ({ selectedPig, setResults }: RaceStartButtonProps) => {
-  const { mutateAsync } = useRaceRewardMintMutate();
+const RaceStartButton = ({
+  selectedPig,
+  setResults,
+  mutateAsync,
+}: RaceStartButtonProps) => {
   const handleRaceReward = async (position: RacePosition) => {
     if (!selectedPig) return;
     try {
@@ -29,6 +33,7 @@ const RaceStartButton = ({ selectedPig, setResults }: RaceStartButtonProps) => {
       }
     }
   };
+
   const startRace = () => {
     const results = assignRacePositions(Pigs);
     setResults(results);
@@ -37,14 +42,19 @@ const RaceStartButton = ({ selectedPig, setResults }: RaceStartButtonProps) => {
     if (!userPigResult) return;
 
     if (userPigResult.racePosition !== "none") {
-      handleRaceReward(userPigResult.racePosition);
+      toast.success("🎉 You won! Processing your reward...");
+      setTimeout(() => {
+        handleRaceReward(userPigResult.racePosition);
+      }, 2000);
+    } else {
+      toast.info("You couldn't win try again next time");
     }
   };
 
   return (
     <button
       className="
-         mt-5 mx-10 flex flex-col items-center justify-center gap-4
+         mt-10  flex flex-col items-center justify-center gap-4
          w-52 h-40
          bg-white/10
          backdrop-blur-lg
@@ -52,10 +62,9 @@ const RaceStartButton = ({ selectedPig, setResults }: RaceStartButtonProps) => {
          rounded-2xl
          shadow-lg
          text-white font-semibold
-         transition-all duration-300  hover:scale-110
-         hover:bg-white/20 hover:border-white/40
+         transition-all duration-300  
          focus:outline-none focus:ring-2 focus:ring-white/50
-         disabled:opacity-50 disabled:cursor-not-allowed
+         disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer
        "
       disabled={!selectedPig}
       onClick={startRace}

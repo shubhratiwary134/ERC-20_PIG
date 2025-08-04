@@ -13,7 +13,7 @@ const RaceCard = ({
   };
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   return (
-    <div className="mt-10 text-white flex flex-col p-10">
+    <div className="mt-10 text-white flex flex-col shrink">
       <h1 className="text-2xl">
         Pick your pig - Choose wisely this might be the toughest decision you
         make
@@ -29,7 +29,7 @@ const RaceCard = ({
             backdrop-blur-lg border border-white/20 rounded-2xl shadow-lg text-white transition-all
             duration-300 hover:cursor-pointer hover:scale-110 hover:bg-white/20 hover:border-white/40`}
           >
-            <img src={pig.imageUrl} className="h-1/2" />
+            <img src={pig.imageUrl} className="h-1/2 " />
 
             <p className="text-gray-200">{pig.name}</p>
             <div className="h-1 bg-gray-400/50 w-full"></div>
