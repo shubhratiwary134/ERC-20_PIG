@@ -9,8 +9,8 @@ const ResultDisplay = ({
   selectedPig: Pig | null;
 }) => {
   return (
-    <div className="mt-10 px-10 py-5">
-      <p className="text-3xl font-bold text-white mb-6 text-center drop-shadow">
+    <div className="mt-10 px-10 font-oxanium py-5">
+      <p className="text-3xl font-bold text-purple-400 mb-6 text-center drop-shadow">
         🏁 Race Results
       </p>
       <div className="flex flex-wrap justify-center gap-10">

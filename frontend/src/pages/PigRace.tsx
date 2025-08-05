@@ -15,7 +15,7 @@ const PigRace = () => {
   return (
     <div>
       <Navbar />
-      <div className="pt-5 px-10 text-white">
+      <div className="pt-5 px-10 text-white ">
         {!results && <RaceCard setSelectedPig={setSelectedPig} />}
         {results ? (
           <ResultDisplay results={results} selectedPig={selectedPig} />

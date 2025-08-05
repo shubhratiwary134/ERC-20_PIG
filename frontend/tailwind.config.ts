@@ -4,9 +4,7 @@ const config: Config = {
   content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
   theme: {
     extend: {
-      fontFamily: {
-        sans: ["Inter", "sans-serif"],
-      },
+      fontFamily: {},
     },
   },
   plugins: [],

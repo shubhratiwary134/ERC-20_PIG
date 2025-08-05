@@ -13,11 +13,15 @@ const RaceCard = ({
   };
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   return (
-    <div className="mt-10 text-white flex flex-col shrink">
-      <h1 className="text-2xl">
-        Pick your pig - Choose wisely this might be the toughest decision you
-        make
-      </h1>
+    <div className="mt-10 flex flex-col shrink">
+      <div className="font-oxanium">
+        <h1 className="text-5xl  font-extrabold text-purple-400">
+          SELECT YOUR CHAMPION
+        </h1>
+        <p className="text-lg text-slate-400 mt-1">
+          A legend will be crowned in the grand arena.
+        </p>
+      </div>
       <div className="mt-10 flex gap-20">
         {Pigs.map((pig, index) => (
           <div
