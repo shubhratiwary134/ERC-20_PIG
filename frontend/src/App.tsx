@@ -84,7 +84,7 @@ function App() {
           </div>
         </div>
 
-        <div className="absolute inset-y-0 right-0 w-1/2 z-10">
+        <div className="absolute inset-y-0 right-10 w-1/2 z-10">
           <SplineElement />
         </div>
       </div>
