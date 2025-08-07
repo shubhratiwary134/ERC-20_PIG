@@ -1,11 +1,23 @@
-import React from "react";
 import { motion } from "framer-motion";
 
 const pigs = ["🐖", "🐷", "🐽"];
 
-const LoaderAnimation: React.FC = () => (
-  <div className=" flex justify-center items-center p-4 rounded-lg">
-    <div className=" flex gap-3">
+const LoaderAnimation = () => (
+  <div className="absolute inset-0 flex flex-col justify-center items-center overflow-hidden ">
+    <motion.p
+      initial={{ opacity: 0.6 }}
+      animate={{ opacity: [0.6, 1, 0.6] }}
+      transition={{
+        duration: 2.5,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }}
+      className="text-gray-300 text-lg mb-4 font-medium text-center px-4"
+    >
+      🐽 Sprinting for snacks, glory, and maybe a truffle or two.
+    </motion.p>
+
+    <div className="flex gap-3 p-4 rounded-lg">
       {pigs.map((pig, i) => (
         <motion.span
           key={i}
