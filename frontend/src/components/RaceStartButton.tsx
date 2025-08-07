@@ -38,22 +38,26 @@ const RaceStartButton = ({
 
   const startRace = () => {
     setAnimationFlag(true);
-    const results = assignRacePositions(Pigs);
+
     setTimeout(() => {
+      const results = assignRacePositions(Pigs);
       setResults(results);
       setAnimationFlag(false);
-    }, 4000);
-    const userPigResult = results.find((r) => r.pig.name === selectedPig?.name);
-    if (!userPigResult) return;
 
-    if (userPigResult.racePosition !== "none") {
-      toast.success("🎉 You won! Processing your reward...");
-      setTimeout(() => {
-        handleRaceReward(userPigResult.racePosition);
-      }, 2000);
-    } else {
-      toast.info("You couldn't win try again next time");
-    }
+      const userPigResult = results.find(
+        (r) => r.pig.name === selectedPig?.name
+      );
+      if (!userPigResult) return;
+
+      if (userPigResult.racePosition !== "none") {
+        toast.success("🎉 You won! Processing your reward...");
+        setTimeout(() => {
+          handleRaceReward(userPigResult.racePosition);
+        }, 2000);
+      } else {
+        toast.info("You couldn't win try again next time");
+      }
+    }, 4000);
   };
 
   return (

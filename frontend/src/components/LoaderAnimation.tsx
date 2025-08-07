@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 const pigs = ["🐖", "🐷", "🐽"];
 
 const LoaderAnimation: React.FC = () => (
-  <div className="flex justify-center items-center bg-opacity-80 p-4 rounded-lg">
-    <div className="flex gap-3">
+  <div className=" flex justify-center items-center p-4 rounded-lg">
+    <div className=" flex gap-3">
       {pigs.map((pig, i) => (
         <motion.span
           key={i}

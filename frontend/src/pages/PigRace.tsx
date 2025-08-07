@@ -21,10 +21,14 @@ const PigRace = () => {
         {!results && !animationFlag && (
           <RaceCard setSelectedPig={setSelectedPig} />
         )}
+
         {animationFlag && <LoaderAnimation />}
-        {results ? (
+
+        {results && (
           <ResultDisplay results={results} selectedPig={selectedPig} />
-        ) : (
+        )}
+
+        {!results && !animationFlag && (
           <RaceStartButton
             selectedPig={selectedPig}
             setResults={setResults}
@@ -32,6 +36,7 @@ const PigRace = () => {
             setAnimationFlag={setAnimationFlag}
           />
         )}
+
         {isError && (
           <div className="mx-auto my-10 max-w-md rounded-lg  bg-red-100/20 px-6 py-4 text-red-300 shadow-md backdrop-blur-sm">
             <h2 className="text-lg font-semibold">⚠️ Reward Minting Failed</h2>
@@ -42,7 +47,8 @@ const PigRace = () => {
             </p>
           </div>
         )}
-        <ToastContainer theme="dark" />
+
+        <ToastContainer theme="dark" position="bottom-left" />
       </div>
     </div>
   );

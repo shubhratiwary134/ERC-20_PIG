@@ -5,7 +5,7 @@ import { useAppSelector } from "../store/hook";
 import { IoTimeOutline } from "react-icons/io5";
 import { FaDollarSign } from "react-icons/fa";
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
   const { account, provider } = useAppSelector((state) => state.wallet);
   const { data } = useQuery({
     queryKey: ["userInfo", account],
