@@ -15,7 +15,7 @@ const RaceCard = ({
   return (
     <div className="mt-10 flex flex-col shrink">
       <div className="font-oxanium">
-        <h1 className="text-5xl  font-extrabold text-purple-400">
+        <h1 className="text-4xl  font-extrabold text-purple-400">
           SELECT YOUR CHAMPION
         </h1>
         <p className="text-lg text-slate-400 mt-1">

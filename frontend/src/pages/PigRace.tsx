@@ -7,16 +7,21 @@ import type { PigResult } from "../utils/assignRacePositions";
 import ResultDisplay from "../components/ResultDisplay";
 import { ToastContainer } from "react-toastify";
 import { useRaceRewardMintMutate } from "../customHooks/useRaceRewardMintMutate";
+import LoaderAnimation from "../components/LoaderAnimation";
 
 const PigRace = () => {
   const [selectedPig, setSelectedPig] = useState<Pig | null>(null);
   const [results, setResults] = useState<PigResult[] | null>(null);
+  const [animationFlag, setAnimationFlag] = useState<boolean>(false);
   const { error, isError, mutateAsync } = useRaceRewardMintMutate();
   return (
     <div>
       <Navbar />
       <div className="pt-5 px-10 text-white ">
-        {!results && <RaceCard setSelectedPig={setSelectedPig} />}
+        {!results && !animationFlag && (
+          <RaceCard setSelectedPig={setSelectedPig} />
+        )}
+        {animationFlag && <LoaderAnimation />}
         {results ? (
           <ResultDisplay results={results} selectedPig={selectedPig} />
         ) : (
@@ -24,6 +29,7 @@ const PigRace = () => {
             selectedPig={selectedPig}
             setResults={setResults}
             mutateAsync={mutateAsync}
+            setAnimationFlag={setAnimationFlag}
           />
         )}
         {isError && (

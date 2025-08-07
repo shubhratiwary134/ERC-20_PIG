@@ -11,12 +11,14 @@ interface RaceStartButtonProps {
   selectedPig: Pig | null;
   setResults: (pigs: PigResult[]) => void;
   mutateAsync: (position: RacePosition) => Promise<any>;
+  setAnimationFlag: (animationFlag: boolean) => void;
 }
 
 const RaceStartButton = ({
   selectedPig,
   setResults,
   mutateAsync,
+  setAnimationFlag,
 }: RaceStartButtonProps) => {
   const handleRaceReward = async (position: RacePosition) => {
     if (!selectedPig) return;
@@ -35,9 +37,12 @@ const RaceStartButton = ({
   };
 
   const startRace = () => {
+    setAnimationFlag(true);
     const results = assignRacePositions(Pigs);
-    setResults(results);
-
+    setTimeout(() => {
+      setResults(results);
+      setAnimationFlag(false);
+    }, 4000);
     const userPigResult = results.find((r) => r.pig.name === selectedPig?.name);
     if (!userPigResult) return;
 
