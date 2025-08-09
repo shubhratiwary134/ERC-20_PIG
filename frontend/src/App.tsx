@@ -29,14 +29,14 @@ function App() {
       <Navbar />
       <div className="relative flex w-full h-screen overflow-hidden ">
         <div className="relative z-20 flex text-wrap flex-col justify-center w-1/2 px-16 text-white">
-          <h1 className="text-8xl font-bold font-inter ">
+          <h1 className="text-8xl font-bold font-oxanium">
             Mint Your <br />
             <span className="text-blue-300">Digital Assets</span>
           </h1>
-          <p className="mt-6 text-lg font-sans">
-            Create, deploy, and manage your own cryptocurrency tokens on the
-            blockchain. Join the future of decentralized finance with our
-            cutting-edge minting platform.
+          <p className="mt-6 text-lg font-inter">
+            Mint tokens daily from our faucet or win them in the exciting races.
+            Build your digital portfolio on our cutting edge and playful
+            decentralized platform.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center  gap-10">
             <button
