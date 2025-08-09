@@ -9,8 +9,8 @@ const ResultDisplay = ({
   selectedPig: Pig | null;
 }) => {
   return (
-    <div className="mt-10 px-10 font-oxanium py-5">
-      <p className="text-3xl font-bold text-purple-400 mb-6 text-center drop-shadow">
+    <div className=" px-10 font-oxanium py-5">
+      <p className="text-xl font-bold text-purple-400 mb-6 text-center drop-shadow">
         🏁 Race Results
       </p>
       <div className="flex flex-wrap justify-center gap-10">
@@ -20,7 +20,7 @@ const ResultDisplay = ({
           return (
             <div
               key={index}
-              className={`relative w-52 h-60 p-4 rounded-2xl shadow-md backdrop-blur-lg flex flex-col items-center justify-between transition-transform
+              className={`relative w-52 h-52 p-4 rounded-2xl shadow-md backdrop-blur-lg flex flex-col items-center justify-between transition-transform
                 ${
                   isUserPig
                     ? "border-2 border-cyan-400 bg-cyan-300/10 scale-105"
@@ -39,7 +39,7 @@ const ResultDisplay = ({
                 className="h-24 w-auto rounded-lg object-contain"
                 alt={result.pig.name}
               />
-              <p className="text-lg font-semibold mt-2">{result.pig.name}</p>
+              <p className="text-sm font-semibold mt-2">{result.pig.name}</p>
               <div className="h-1 w-full bg-white/20 my-2 rounded"></div>
               <p className="text-sm text-gray-300">
                 Position:{" "}

@@ -7,14 +7,14 @@ const WalletButton = () => {
   const { connectWallet, removeWallet } = useWallet();
   const { connected } = useAppSelector((state) => state.wallet);
   return (
-    <div className="text-white cursor-pointer">
+    <div className="text-white cursor-pointer flex items-center">
       {connected ? (
         <button onClick={removeWallet}>
-          <IoPersonSharp size={32} />
+          <IoPersonSharp className="text-base" />
         </button>
       ) : (
         <button onClick={connectWallet}>
-          <MdOutlineAccountBalanceWallet size={32} />
+          <MdOutlineAccountBalanceWallet className="text-lg" />
         </button>
       )}
     </div>

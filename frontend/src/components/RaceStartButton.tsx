@@ -63,8 +63,7 @@ const RaceStartButton = ({
   return (
     <button
       className="
-         mt-10  flex flex-col items-center justify-center gap-4
-         w-52 h-40
+         mt-10  flex   items-center justify-around gap-4 w-full mb-2 h-32
          bg-white/10
          backdrop-blur-lg
          border border-white/20
@@ -79,9 +78,9 @@ const RaceStartButton = ({
       onClick={startRace}
     >
       {selectedPig && (
-        <img src={selectedPig?.imageUrl} className="h-1/2 rounded-3xl" />
+        <img src={selectedPig?.imageUrl} className="h-2/3  rounded-3xl" />
       )}
-      <span>Start Racing</span>
+      <span className="font-oxanium text-md px-3">Start Racing 🚀</span>
     </button>
   );
 };

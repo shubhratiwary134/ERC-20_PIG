@@ -22,13 +22,13 @@ const Navbar: React.FC = () => {
   });
   return (
     <div className="flex border-blue-300 text-white border-b-2 justify-between p-5 mx-10">
-      <div className="flex gap-20">
+      <div className="flex items-center gap-5">
         <p className="flex items-center gap-2 ">
-          <FaDollarSign size={24} />: {data?.amount ?? "---"}
+          <FaDollarSign className="text-base" />: {data?.amount ?? "---"}
         </p>
 
         <p className="flex items-center gap-2">
-          <IoTimeOutline size={32} />: {data?.lastMintTime ?? "---"}
+          <IoTimeOutline className="text-base" />: {data?.lastMintTime ?? "---"}
         </p>
       </div>
       <WalletButton />
