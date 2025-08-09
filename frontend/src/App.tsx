@@ -28,7 +28,7 @@ function App() {
     <>
       <Navbar />
       <div className="relative flex w-full h-screen overflow-hidden ">
-        <div className="relative z-20 flex text-wrap flex-col justify-center mb-10 w-1/2 px-16 text-white">
+        <div className="relative z-20 flex text-wrap flex-col justify-center w-1/2 px-16 text-white">
           <h1 className="text-8xl font-bold font-inter ">
             Mint Your <br />
             <span className="text-blue-300">Digital Assets</span>
@@ -84,7 +84,7 @@ function App() {
           </div>
         </div>
 
-        <div className="absolute inset-y-0 right-10 w-1/2 z-10">
+        <div className="absolute inset-y-0 right-0 w-1/2 z-10">
           <SplineElement />
         </div>
       </div>
