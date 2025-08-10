@@ -10,11 +10,11 @@ const WalletButton = () => {
     <div className="text-white cursor-pointer flex items-center">
       {connected ? (
         <button onClick={removeWallet}>
-          <IoPersonSharp className="text-base" />
+          <IoPersonSharp className="text-base " />
         </button>
       ) : (
         <button onClick={connectWallet}>
-          <MdOutlineAccountBalanceWallet className="text-lg" />
+          <MdOutlineAccountBalanceWallet className="text-lg lg:text-2xl" />
         </button>
       )}
     </div>
