@@ -15,10 +15,10 @@ const RaceCard = ({
   return (
     <div className="mt-10 flex flex-col shrink">
       <div className="font-oxanium">
-        <h1 className="text-xl lg:text-4xl lg:text-start text-center font-extrabold text-purple-400">
+        <h1 className="text-xl lg:mt-5 lg:text-4xl lg:text-start text-center font-extrabold text-purple-400">
           SELECT YOUR CHAMPION
         </h1>
-        <p className="text-sm text-slate-400 mt-1 text-center lg:text-start">
+        <p className="text-sm lg:text-lg text-slate-400 mt-1 text-center lg:text-start">
           A legend will be crowned in the grand arena.
         </p>
       </div>
@@ -33,10 +33,13 @@ const RaceCard = ({
             backdrop-blur-lg border border-white/20 rounded-2xl shadow-lg text-white transition-all
             duration-300 hover:cursor-pointer hover:scale-110 hover:bg-white/20 hover:border-white/40`}
           >
-            <img src={pig.imageUrl} className="rounded-2xl lg:h-1/2" />
+            <img
+              src={pig.imageUrl}
+              className="rounded-2xl lg:rounded-none lg:h-1/2"
+            />
 
-            <p className="text-gray-200 text-sm">{pig.name}</p>
-            <div className="hidden h-1 bg-gray-400/50 w-full"></div>
+            <p className="text-gray-200 text-sm lg:text-lg">{pig.name}</p>
+            <div className="hidden lg:block h-1 bg-gray-400/50 w-full"></div>
             <div className="hidden md:flex justify-between w-full px-5 text-gray-400 ">
               <div className="flex flex-col gap-2 ">
                 <p className="text-sm ">Height: {pig.height}</p>
