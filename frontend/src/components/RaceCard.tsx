@@ -22,7 +22,7 @@ const RaceCard = ({
           A legend will be crowned in the grand arena.
         </p>
       </div>
-      <div className="mt-10 grid grid-cols-2 lg:flex lg:gap-20 gap-5 ">
+      <div className="mt-10 grid grid-cols-2  lg:flex lg:gap-10 2xl:gap-20 gap-5 ">
         {Pigs.map((pig, index) => (
           <div
             key={index}
