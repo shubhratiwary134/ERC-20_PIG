@@ -44,7 +44,7 @@ const RaceCard = ({
 
             <p className="text-gray-200 text-sm lg:text-lg ">{pig.name}</p>
             <div className="hidden lg:block h-1 bg-gray-400/50 w-full"></div>
-            <div className="hidden lg:flex justify-between w-full px-5 text-gray-400 ">
+            <div className="hidden  lg:flex lg:flex-col lg:gap-2 xl:flex-row justify-between w-full px-5 text-gray-400 ">
               <div className="flex flex-col gap-2 ">
                 <p className="text-sm ">Height: {pig.height}</p>
                 <p className="text-sm">Weight: {pig.weight}</p>
