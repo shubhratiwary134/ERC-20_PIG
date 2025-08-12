@@ -6,7 +6,7 @@
 @theme {
     --font-oxanium: Oxanium,"sans-serif";
     --font-inter: Inter,"sans-serif";
-    --breakpoint-tablet: 400px;
+    --breakpoint-tablet: 440px;
 }
 html, body{
     margin: 0;

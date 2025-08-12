@@ -34,8 +34,8 @@ const RaceCard = ({
             className={`flex ${
               selectedIndex == index ? "bg-white/20 scale-110" : "bg-white/10"
             }
-             ${index === 4 ? "sm:col-start-3" : ""}   
-            flex-col gap-3 lg:gap-5 items-center w-28 sm:w-36 max-w-36 max-h-48 pb-5 lg:w-64 lg:max-w-64 lg:max-h-80
+             ${index === 4 ? "sm:col-start-3" : ""} 
+            flex-col gap-3 lg:gap-5 items-center w-28 sm:w-36  max-w-44 max-h-48 pb-5 lg:w-64 lg:max-w-64 lg:max-h-80
             backdrop-blur-lg border border-white/20 rounded-2xl shadow-lg text-white transition-all
             duration-300 hover:cursor-pointer hover:scale-110 hover:bg-white/20 hover:border-white/40`}
           >

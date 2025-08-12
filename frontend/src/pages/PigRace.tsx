@@ -17,7 +17,7 @@ const PigRace = () => {
   return (
     <div>
       <Navbar />
-      <div className="pt-5 px-10 text-white ">
+      <div className="pt-5 px-10 text-white flex flex-col">
         {!results && !animationFlag && (
           <RaceCard setSelectedPig={setSelectedPig} />
         )}
@@ -29,12 +29,14 @@ const PigRace = () => {
         )}
 
         {!results && !animationFlag && (
-          <RaceStartButton
-            selectedPig={selectedPig}
-            setResults={setResults}
-            mutateAsync={mutateAsync}
-            setAnimationFlag={setAnimationFlag}
-          />
+          <div className="w-full flex justify-center lg:justify-between">
+            <RaceStartButton
+              selectedPig={selectedPig}
+              setResults={setResults}
+              mutateAsync={mutateAsync}
+              setAnimationFlag={setAnimationFlag}
+            />
+          </div>
         )}
 
         {isError && (
