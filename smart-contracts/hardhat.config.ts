@@ -17,6 +17,9 @@ const config: HardhatUserConfig = {
     enabled: true,
     currency: "ETH",
   },
+  etherscan: {
+    apiKey: process.env.ETHERSCAN_API_KEY || "",
+  },
 };
 
 export default config;
