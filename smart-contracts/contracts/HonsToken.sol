@@ -50,10 +50,12 @@ contract Hons is ERC20, Ownable, ERC20Permit {
             amount > 0,
             "invalid condition can't mint 0 tokens, No tokens left"
         );
+
         require(
             totalSupply() + tokenAmount <= TOTAL_SUPPLY_CAP,
             "Over the Limit of total supply cap"
         );
+
         require(
             block.timestamp > user.lastMintTime + COOLDOWN,
             "You can't mine any tokens for now"
