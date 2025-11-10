@@ -1,5 +1,11 @@
 # ERC-20 PIG 🐷: A Gamified Decentralized Faucet
 
+---
+
+![Solidity](https://img.shields.io/badge/Solidity-0.8.28-black?style=for-the-badge) ![Hardhat](https://img.shields.io/badge/Hardhat-Development-yellow?style=for-the-badge) ![Ethers.js](https://img.shields.io/badge/Ethers.js-v6-blue?style=for-the-badge) ![OpenZeppelin](https://img.shields.io/badge/OpenZeppelin-ERC20-lightgrey?style=for-the-badge) ![React](https://img.shields.io/badge/React-Frontend-blue?style=for-the-badge&logo=react) ![TypeScript](https://img.shields.io/badge/TypeScript-Code-blue?style=for-the-badge&logo=typescript) ![MIT License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+
+---
+
 An innovative ERC-20 token project combining a time-based token faucet with a gamified pig racing system. This platform, built with modern Web3 and frontend technologies, allows users to claim tokens and compete for extra rewards in a fun, decentralized environment.
 
 ## ✨ Features
