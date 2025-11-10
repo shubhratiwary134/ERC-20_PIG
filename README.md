@@ -1,4 +1,4 @@
-# ERC-20 PIG 🐷: A Gamified Decentralized Faucet
+# ERC-20 PIG : A Gamified Decentralized Faucet
 
 ---
 
@@ -8,7 +8,7 @@
 
 An innovative ERC-20 token project combining a time-based token faucet with a gamified pig racing system. This platform, built with modern Web3 and frontend technologies, allows users to claim tokens and compete for extra rewards in a fun, decentralized environment.
 
-## ✨ Features
+##  Features
 
 - **ERC-20 Faucet:** Claim `Hons` tokens based on a cooldown timer. The faucet enforces a **24-hour cooldown** between claims and a maximum token cap per user.
 - **Gamified Pig Racing:** Participate in virtual pig races to earn additional token rewards.
@@ -17,7 +17,7 @@ An innovative ERC-20 token project combining a time-based token faucet with a ga
 - **Frontend Interface:** An interactive and user-friendly experience built with **React** and **TypeScript**.
 - **Smart Contracts:** Secure and tested logic implemented in **Solidity**.
 
-## 💰 Tokenomics
+##  Tokenomics
 
 The native token for the platform is **Hons (MRAJ)**.
 
@@ -50,7 +50,7 @@ The native token for the platform is **Hons (MRAJ)**.
 - **Libraries:** OpenZeppelin Contracts (ERC20, Ownable, ERC20Permit)
 - **Web3 Integration:** Ethers.js (v6)
 
-## 🚀 Installation & Setup
+##  Installation & Setup
 
 ### Prerequisites
 
