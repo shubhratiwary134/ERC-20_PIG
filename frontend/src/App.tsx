@@ -13,9 +13,7 @@ function App() {
   const handleMint = async () => {
     try {
       const receipt = await mutateAsync();
-      toast.success(
-        `Mint successful! Transaction Hash: ${receipt.transactionHash}`
-      );
+      toast.success(`Mint successful! Transaction Hash: ${receipt.hash}`);
     } catch (error: any) {
       if (error.code === 4001 || error.code === "ACTION_REJECTED") {
         toast.warning("Transaction cancelled by user.");
