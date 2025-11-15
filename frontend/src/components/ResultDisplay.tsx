@@ -1,3 +1,5 @@
+import { ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import type { Pig } from "../types/types";
 import type { PigResult } from "../utils/assignRacePositions";
 
@@ -8,11 +10,23 @@ const ResultDisplay = ({
   results: PigResult[] | null;
   selectedPig: Pig | null;
 }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="lg:mt-10 px-10 font-oxanium py-5">
+      {/* BACK BUTTON */}
+      <button
+        onClick={() => navigate("/PigRace")}
+        className="flex items-center gap-2 mb-4 text-white hover:text-cyan-300 transition"
+      >
+        <ArrowLeft size={20} />
+        <span className="text-md lg:text-lg font-semibold">Back</span>
+      </button>
+
       <p className="text-xl lg:text-3xl font-bold text-purple-400 mb-6 text-center drop-shadow">
         🏁 Race Results
       </p>
+
       <div className="flex flex-wrap justify-center gap-10">
         {results?.map((result, index) => {
           const isUserPig = selectedPig?.name === result.pig.name;
