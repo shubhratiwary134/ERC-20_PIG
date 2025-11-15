@@ -4,18 +4,24 @@ import { getContract } from "../utils/getContract";
 import { useAppSelector } from "../store/hook";
 import { IoTimeOutline } from "react-icons/io5";
 import { FaDollarSign } from "react-icons/fa";
+import { ethers } from "ethers";
 
 const Navbar: React.FC = () => {
   const { account, provider } = useAppSelector((state) => state.wallet);
   const { data } = useQuery({
     queryKey: ["userInfo", account],
     queryFn: async () => {
-      if (!provider) throw new Error("provide not available");
+      if (!provider) throw new Error("provider not available");
       const contract = getContract(provider);
-      const raw = await contract.getUserInfo(account);
+      const raw = await contract.userMapping(account);
+      const formattedAmount = ethers.formatUnits(raw[0], 18);
+
       return {
-        amount: raw.amount.toString(),
-        lastMintTime: raw.lastMintTime.toNumber(),
+        amount: formattedAmount.toString(),
+        lastMintTime: new Date(Number(raw[1]) * 1000)
+          .toLocaleString()
+          .split(",")[1],
+        lastRoundPosition: Number(raw[2]),
       };
     },
     enabled: Boolean(account && provider),
@@ -25,12 +31,15 @@ const Navbar: React.FC = () => {
       <div className="flex items-center gap-5 lg:gap-20">
         <p className="flex items-center gap-2 ">
           <FaDollarSign className="text-base lg:text-2xl" />:{" "}
-          {data?.amount ?? "---"}
+          {data?.amount ?? "---"} <span className="font-bold">MRAJ</span>
         </p>
 
         <p className="flex items-center gap-2">
-          <IoTimeOutline className="text-base lg:text-2xl" />:{" "}
+          <IoTimeOutline className="text-base lg:text-2xl" /> Last mint time :{" "}
           {data?.lastMintTime ?? "---"}
+        </p>
+        <p className="flex items-center gap-2">
+          Last Race Position: {data?.lastRoundPosition ?? "---"}
         </p>
       </div>
       <WalletButton />

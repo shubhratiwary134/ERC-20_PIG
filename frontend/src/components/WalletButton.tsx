@@ -5,11 +5,14 @@ import { MdOutlineAccountBalanceWallet } from "react-icons/md";
 
 const WalletButton = () => {
   const { connectWallet, removeWallet } = useWallet();
-  const { connected } = useAppSelector((state) => state.wallet);
+  const { connected, account } = useAppSelector((state) => state.wallet);
   return (
     <div className="text-white cursor-pointer flex items-center">
       {connected ? (
-        <button onClick={removeWallet}>
+        <button onClick={removeWallet} className="flex items-center gap-4">
+          {account?.split("").slice(0, 6).join("") +
+            "..." +
+            account?.split("").slice(-4).join("")}
           <IoPersonSharp className="text-base " />
         </button>
       ) : (
