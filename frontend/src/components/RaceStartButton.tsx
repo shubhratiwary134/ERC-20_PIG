@@ -6,6 +6,7 @@ import {
   type PigResult,
 } from "../utils/assignRacePositions";
 import { Pigs } from "../data/pigData";
+import { useAppSelector } from "../store/hook";
 
 interface RaceStartButtonProps {
   selectedPig: Pig | null;
@@ -20,6 +21,8 @@ const RaceStartButton = ({
   mutateAsync,
   setAnimationFlag,
 }: RaceStartButtonProps) => {
+  const { connected } = useAppSelector((state) => state.wallet);
+
   const handleRaceReward = async (position: number) => {
     if (!selectedPig) return;
     try {
@@ -72,7 +75,7 @@ const RaceStartButton = ({
          focus:outline-none focus:ring-2 focus:ring-white/50
          disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer
        "
-      disabled={!selectedPig}
+      disabled={!selectedPig || !connected}
       onClick={startRace}
     >
       {selectedPig && (
