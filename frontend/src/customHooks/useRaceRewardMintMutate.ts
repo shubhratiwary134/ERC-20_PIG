@@ -1,14 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAppSelector } from "../store/hook";
 import { getContract } from "../utils/getContract";
-import type { RacePosition } from "../types/types";
 
 export const useRaceRewardMintMutate = () => {
   const { account, signer } = useAppSelector((state) => state.wallet);
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (position: RacePosition) => {
+    mutationFn: async (position: number) => {
       if (!signer) throw new Error("Signer not available");
       const contract = getContract(signer);
       const tx = await contract.raceReward(position);

@@ -1,10 +1,10 @@
-import Navbar from './components/Navbar';
-import SplineElement from './components/SplineElement';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useFaucetMintMutate } from './customHooks/useFaucetMintMutate';
-import { useAppSelector } from './store/hook';
-import { FaRocket, FaTicketAlt } from 'react-icons/fa';
+import Navbar from "./components/Navbar";
+import SplineElement from "./components/SplineElement";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useFaucetMintMutate } from "./customHooks/useFaucetMintMutate";
+import { useAppSelector } from "./store/hook";
+import { FaRocket, FaTicketAlt } from "react-icons/fa";
 
 function App() {
   const { connected } = useAppSelector((state) => state.wallet);
@@ -17,10 +17,11 @@ function App() {
         `Mint successful! Transaction Hash: ${receipt.transactionHash}`
       );
     } catch (error: any) {
-      if (error.code === 4001 || error.code === 'ACTION_REJECTED') {
-        toast.warning('Transaction cancelled by user.');
+      if (error.code === 4001 || error.code === "ACTION_REJECTED") {
+        toast.warning("Transaction cancelled by user.");
       } else {
-        toast.error(`Mint failed: ${error.message}`);
+        toast.error(`Mint failed: please try again later.`);
+        console.error("Mint failed:", error);
       }
     }
   };
@@ -76,7 +77,7 @@ function App() {
       disabled:opacity-50 disabled:cursor-not-allowed
     "
               disabled={!connected}
-              onClick={() => (window.location.href = '/pigRace')}
+              onClick={() => (window.location.href = "/pigRace")}
             >
               <FaRocket size={40} />
               <span>Start Racing</span>

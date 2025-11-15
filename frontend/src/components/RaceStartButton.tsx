@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 
-import type { Pig, RacePosition } from "../types/types";
+import type { Pig } from "../types/types";
 import {
   assignRacePositions,
   type PigResult,
@@ -10,7 +10,7 @@ import { Pigs } from "../data/pigData";
 interface RaceStartButtonProps {
   selectedPig: Pig | null;
   setResults: (pigs: PigResult[]) => void;
-  mutateAsync: (position: RacePosition) => Promise<any>;
+  mutateAsync: (position: number) => Promise<any>;
   setAnimationFlag: (animationFlag: boolean) => void;
 }
 
@@ -20,7 +20,7 @@ const RaceStartButton = ({
   mutateAsync,
   setAnimationFlag,
 }: RaceStartButtonProps) => {
-  const handleRaceReward = async (position: RacePosition) => {
+  const handleRaceReward = async (position: number) => {
     if (!selectedPig) return;
     try {
       const receipt = await mutateAsync(position);
@@ -52,7 +52,7 @@ const RaceStartButton = ({
       if (userPigResult.racePosition !== "none") {
         toast.success("🎉 You won! Processing your reward...");
         setTimeout(() => {
-          handleRaceReward(userPigResult.racePosition);
+          handleRaceReward(userPigResult.position);
         }, 2000);
       } else {
         toast.info("You couldn't win try again next time");
