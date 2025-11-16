@@ -7,6 +7,7 @@ import store from "./store/store.ts";
 import { BrowserRouter, Route, Routes } from "react-router";
 import PigRace from "./pages/PigRace.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Layout } from "./Layout.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -14,8 +15,10 @@ createRoot(document.getElementById("root")!).render(
       <QueryClientProvider client={new QueryClient()}>
         <Provider store={store}>
           <Routes>
-            <Route path="/" element={<App />} />
-            <Route path="/pigRace" element={<PigRace />}></Route>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<App />} />
+              <Route path="/pigRace" element={<PigRace />} />
+            </Route>
           </Routes>
         </Provider>
       </QueryClientProvider>
