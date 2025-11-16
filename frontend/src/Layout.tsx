@@ -5,9 +5,8 @@ export const Layout = () => {
   useEagerConnect();
 
   return (
+    // The outlet will render the matched child route component in my case App or PigRace
     <div className="app-container">
-      // The outlet will render the matched child route component in my case App
-      or PigRace
       <Outlet />
     </div>
   );
