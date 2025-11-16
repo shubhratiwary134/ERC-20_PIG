@@ -1,13 +1,16 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAppSelector } from "../store/hook";
 import { faucetMint } from "../utils/faucetMint";
+import { ethers } from "ethers";
 
 export const useFaucetMintMutate = () => {
-  const { signer, account } = useAppSelector((state) => state.wallet);
+  const { account } = useAppSelector((state) => state.wallet);
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async () => {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
       if (!signer) throw new Error("Signer not available");
       return await faucetMint(signer);
     },

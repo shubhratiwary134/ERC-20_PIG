@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useFaucetMintMutate } from "./customHooks/useFaucetMintMutate";
 import { useAppSelector } from "./store/hook";
 import { FaRocket, FaTicketAlt } from "react-icons/fa";
+import { useEagerConnect } from "./customHooks/useEagerConnect";
 
 function App() {
   const { connected } = useAppSelector((state) => state.wallet);
@@ -23,6 +24,9 @@ function App() {
       }
     }
   };
+
+  useEagerConnect();
+
   return (
     <>
       <Navbar />

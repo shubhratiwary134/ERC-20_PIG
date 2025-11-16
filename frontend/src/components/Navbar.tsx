@@ -7,10 +7,11 @@ import { FaDollarSign } from "react-icons/fa";
 import { ethers } from "ethers";
 
 const Navbar: React.FC = () => {
-  const { account, provider } = useAppSelector((state) => state.wallet);
+  const { account } = useAppSelector((state) => state.wallet);
   const { data } = useQuery({
     queryKey: ["userInfo", account],
     queryFn: async () => {
+      const provider = new ethers.BrowserProvider(window.ethereum);
       if (!provider) throw new Error("provider not available");
       const contract = getContract(provider);
       const raw = await contract.userMapping(account);
@@ -24,7 +25,7 @@ const Navbar: React.FC = () => {
         lastRoundPosition: Number(raw[2]),
       };
     },
-    enabled: Boolean(account && provider),
+    enabled: Boolean(account),
   });
   return (
     <div className="flex border-blue-300 text-white border-b-2 justify-between p-5 mx-10">

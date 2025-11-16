@@ -1,13 +1,16 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAppSelector } from "../store/hook";
 import { getContract } from "../utils/getContract";
+import { ethers } from "ethers";
 
 export const useRaceRewardMintMutate = () => {
-  const { account, signer } = useAppSelector((state) => state.wallet);
+  const { account } = useAppSelector((state) => state.wallet);
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async (position: number) => {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
       if (!signer) throw new Error("Signer not available");
       const contract = getContract(signer);
       const tx = await contract.raceReward(position);
