@@ -5,6 +5,7 @@ import { useAppSelector } from "../store/hook";
 import { IoTimeOutline } from "react-icons/io5";
 import { FaDollarSign } from "react-icons/fa";
 import { ethers } from "ethers";
+import CooldownTimer from "./CooldownTimer";
 
 const Navbar: React.FC = () => {
   const { account } = useAppSelector((state) => state.wallet);
@@ -19,9 +20,7 @@ const Navbar: React.FC = () => {
 
       return {
         amount: formattedAmount.toString(),
-        lastMintTime: new Date(Number(raw[1]) * 1000)
-          .toLocaleString()
-          .split(",")[1],
+        lastMintTime: Number(raw[1]),
         lastRoundPosition: Number(raw[2]),
       };
     },
@@ -36,8 +35,12 @@ const Navbar: React.FC = () => {
         </p>
 
         <p className="flex items-center gap-2">
-          <IoTimeOutline className="text-base lg:text-2xl" /> Last mint time :{" "}
-          {data?.lastMintTime ?? "---"}
+          <IoTimeOutline className="text-base lg:text-2xl" /> Cooldown:{" "}
+          {data?.lastMintTime ? (
+            <CooldownTimer lastMintTime={data.lastMintTime} />
+          ) : (
+            "---"
+          )}
         </p>
         <p className="flex items-center gap-2">
           Last Race Position: {data?.lastRoundPosition ?? "---"}
