@@ -1,22 +1,21 @@
 import { ArrowLeft } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import type { Pig } from "../types/types";
 import type { PigResult } from "../utils/assignRacePositions";
 
 const ResultDisplay = ({
   results,
   selectedPig,
+  onBack,
 }: {
   results: PigResult[] | null;
   selectedPig: Pig | null;
+  onBack: () => void;
 }) => {
-  const navigate = useNavigate();
-
   return (
     <div className="lg:mt-10 px-10 font-oxanium py-5">
       {/* BACK BUTTON */}
       <button
-        onClick={() => navigate("/PigRace")}
+        onClick={onBack}
         className="flex items-center gap-2 mb-4 text-white hover:text-cyan-300 transition"
       >
         <ArrowLeft size={20} />
