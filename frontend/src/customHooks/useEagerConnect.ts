@@ -21,15 +21,9 @@ export const useEagerConnect = () => {
       }
       try {
         const provider = new ethers.BrowserProvider(window.ethereum);
-        const accounts = await provider.listAccounts();
+        const signer = await provider.getSigner();
 
-        if (accounts.length === 0) {
-          // No accounts found, user is not connected
-          setTried(true);
-          return;
-        }
-
-        const account = accounts[0].address;
+        const account = await signer.getAddress();
         const network = await provider.getNetwork();
         const chainId = Number(network.chainId);
 
