@@ -15,9 +15,7 @@ export function useWallet() {
       const account = await signer.getAddress();
       const network = await provider.getNetwork();
       const chainId = Number(network.chainId);
-      dispatch(
-        setWallet({ provider, signer, account, chainId, connected: true })
-      );
+      dispatch(setWallet({ account, chainId, connected: true }));
     } catch (error) {
       console.error("Error connecting to wallet:", error);
       alert("Failed to connect wallet. Please try again.");
