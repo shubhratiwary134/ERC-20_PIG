@@ -25,7 +25,16 @@ const PigRace = () => {
         {animationFlag && <LoaderAnimation />}
 
         {results && (
-          <ResultDisplay results={results} selectedPig={selectedPig} />
+          <ResultDisplay
+            results={results}
+            selectedPig={selectedPig}
+            onBack={() => {
+              setResults(null); //  clears results → goes back to race screen
+              setAnimationFlag(false); // optional safety reset
+              // you can also reset selectedPig here if you want:
+              // setSelectedPig(null);
+            }}
+          />
         )}
 
         {!results && !animationFlag && (
