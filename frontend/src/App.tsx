@@ -1,14 +1,16 @@
-import Navbar from "./components/Navbar";
 import SplineElement from "./components/SplineElement";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useFaucetMintMutate } from "./customHooks/useFaucetMintMutate";
 import { useAppSelector } from "./store/hook";
 import { FaRocket, FaTicketAlt } from "react-icons/fa";
+import { useNavigate } from "react-router";
 
 function App() {
   const { connected } = useAppSelector((state) => state.wallet);
   const { mutateAsync } = useFaucetMintMutate();
+
+  const navigate = useNavigate();
 
   const handleMint = async () => {
     try {
@@ -26,7 +28,6 @@ function App() {
 
   return (
     <>
-      <Navbar />
       <div className="relative flex w-full h-screen overflow-hidden ">
         <div className="relative z-20 flex text-wrap flex-col justify-center w-1/2 px-16 text-white">
           <h1 className="text-8xl font-bold font-oxanium">
@@ -76,7 +77,7 @@ function App() {
       disabled:opacity-50 disabled:cursor-not-allowed
     "
               disabled={!connected}
-              onClick={() => (window.location.href = "/pigRace")}
+              onClick={() => navigate("/pigRace")}
             >
               <FaRocket size={40} />
               <span>Start Racing</span>

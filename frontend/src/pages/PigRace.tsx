@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Navbar from "../components/Navbar";
 import RaceCard from "../components/RaceCard";
 import type { Pig } from "../types/types";
 import RaceStartButton from "../components/RaceStartButton";
@@ -8,15 +7,21 @@ import ResultDisplay from "../components/ResultDisplay";
 import { ToastContainer } from "react-toastify";
 import { useRaceRewardMintMutate } from "../customHooks/useRaceRewardMintMutate";
 import LoaderAnimation from "../components/LoaderAnimation";
+import { useNavigate } from "react-router";
 
 const PigRace = () => {
   const [selectedPig, setSelectedPig] = useState<Pig | null>(null);
   const [results, setResults] = useState<PigResult[] | null>(null);
   const [animationFlag, setAnimationFlag] = useState<boolean>(false);
   const { error, isError, mutateAsync } = useRaceRewardMintMutate();
+
+  const navigate = useNavigate();
+
   return (
     <div>
-      <Navbar />
+      <button onClick={() => navigate("/")} className="text-2xl text-white">
+        ⬅️ Back to Home
+      </button>
       <div className="pt-5 px-10 text-white flex flex-col">
         {!results && !animationFlag && (
           <RaceCard setSelectedPig={setSelectedPig} />
