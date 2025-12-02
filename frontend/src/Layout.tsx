@@ -53,7 +53,11 @@ export const Layout = () => {
           animate="animate"
           exit="exit"
           // Important: ensure the page takes full height/width during animation
-          className="absolute top-0 left-0 w-full h-full overflow-auto bg-[#0f0f15]" // Assuming your app base color is dark
+          style={{
+            background:
+              "radial-gradient(circle at top left, #10151f, #0a0c12 60%, #050509)",
+          }}
+          className="absolute top-0 left-0 w-full h-full overflow-auto"
         >
           {/* Add padding-top to account for the fixed Navbar if necessary */}
           <div className="pt-20 h-full">
