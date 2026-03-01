@@ -8,6 +8,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import PigRace from "./pages/PigRace.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Layout } from "./Layout.tsx";
+import LandingPage from "./pages/LandingPage.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -15,9 +16,10 @@ createRoot(document.getElementById("root")!).render(
       <QueryClientProvider client={new QueryClient()}>
         <Provider store={store}>
           <Routes>
-            <Route path="/" element={<Layout />}>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/app" element={<Layout />}>
               <Route index element={<App />} />
-              <Route path="/pigRace" element={<PigRace />} />
+              <Route path="pigRace" element={<PigRace />} />
             </Route>
           </Routes>
         </Provider>

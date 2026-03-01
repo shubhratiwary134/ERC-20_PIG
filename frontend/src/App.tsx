@@ -77,7 +77,7 @@ function App() {
       disabled:opacity-50 disabled:cursor-not-allowed
     "
               disabled={!connected}
-              onClick={() => navigate("/pigRace")}
+              onClick={() => navigate("/app/pigRace")}
             >
               <FaRocket size={40} />
               <span>Start Racing</span>
