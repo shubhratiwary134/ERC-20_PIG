@@ -27,23 +27,23 @@ const Navbar: React.FC = () => {
     enabled: Boolean(account),
   });
   return (
-    <div className="flex border-blue-300 text-white border-b-2 justify-between p-5 mx-10">
-      <div className="flex items-center gap-5 lg:gap-20">
-        <p className="flex items-center gap-2 ">
-          <FaDollarSign className="text-base lg:text-2xl" />:{" "}
+    <div className="flex flex-col md:flex-row border-blue-300 text-white border-b-2 justify-between items-center p-3 md:p-5 mx-4 md:mx-10 gap-4 md:gap-0">
+      <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8 lg:gap-20 text-sm lg:text-base">
+        <p className="flex items-center gap-1.5 whitespace-nowrap">
+          <FaDollarSign className="text-base lg:text-xl" />:{" "}
           {data?.amount ?? "---"} <span className="font-bold">MRAJ</span>
         </p>
 
-        <p className="flex items-center gap-2">
-          <IoTimeOutline className="text-base lg:text-2xl" /> Cooldown:{" "}
+        <p className="flex items-center gap-1.5 whitespace-nowrap">
+          <IoTimeOutline className="text-base lg:text-xl" /> Cooldown:{" "}
           {data?.lastMintTime ? (
             <CooldownTimer lastMintTime={data.lastMintTime} />
           ) : (
             "---"
           )}
         </p>
-        <p className="flex items-center gap-2">
-          Last Race Position: {data?.lastRoundPosition ?? "---"}
+        <p className="flex items-center gap-1.5 whitespace-nowrap hidden sm:flex">
+          Last Race: {data?.lastRoundPosition ?? "---"}
         </p>
       </div>
       <WalletButton />
